@@ -65,7 +65,7 @@ svg {
   padding: 16px 20px 60px;
 }
 
-/* Header & Theme Switcher */
+/* ══ HEADER & THEME SWITCHER ══ */
 .header {
   display: flex;
   align-items: center;
@@ -113,7 +113,7 @@ svg {
   align-items: center;
   gap: 6px;
   background: var(--bg-card);
-  padding: 5px 8px;
+  padding: 6px 10px;
   border: 1px solid var(--border-color);
   border-radius: 20px;
 }
@@ -163,7 +163,7 @@ svg {
   outline: none;
 }
 
-/* Hero */
+/* ══ HERO CARD ══ */
 .hero-card {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
@@ -228,7 +228,7 @@ svg {
   color: var(--text-muted);
 }
 
-/* Categories */
+/* ══ CATEGORY PILLS ══ */
 .category-bar {
   margin-bottom: 20px;
 }
@@ -257,7 +257,7 @@ svg {
   border-color: var(--accent-cyan);
 }
 
-/* Match Cards */
+/* ══ MATCH CARDS ══ */
 .matches-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -306,6 +306,7 @@ svg {
   display: flex;
   align-items: center;
   gap: 4px;
+  z-index: 2;
 }
 
 .match-live-dot {
@@ -324,9 +325,10 @@ svg {
   font-size: 0.65rem;
   padding: 2px 6px;
   border-radius: 4px;
+  z-index: 2;
 }
 
-/* Fix: pointer-events none prevents overlay from blocking clicks */
+/* FIX: pointer-events: none ensures this overlay NEVER blocks your clicks */
 .match-play-overlay {
   position: absolute;
   inset: 0;
@@ -335,7 +337,7 @@ svg {
   justify-content: center;
   background: rgba(0, 0, 0, 0.4);
   opacity: 0;
-  pointer-events: none;
+  pointer-events: none !important;
   transition: opacity 0.2s ease;
 }
 
@@ -346,7 +348,8 @@ svg {
 .match-play-overlay svg {
   width: 32px !important;
   height: 32px !important;
-  fill: #fff;
+  fill: #fff !important;
+  pointer-events: none !important;
 }
 
 .match-info {
@@ -369,7 +372,16 @@ svg {
   color: var(--text-muted);
 }
 
-/* Video Player View */
+.lang-badge {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-color);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  margin-right: 6px;
+}
+
+/* ══ VIDEO PLAYER VIEW ══ */
 .player-view {
   position: fixed;
   inset: 0;
@@ -430,6 +442,7 @@ svg {
   color: #fff;
   flex-direction: column;
   gap: 10px;
+  z-index: 5;
 }
 
 .player-overlay.hidden, .player-loading.hidden, .player-error.hidden {
@@ -497,6 +510,7 @@ svg {
   text-transform: uppercase;
 }
 
+/* ══ RECOMMENDATION CARDS UNDER PLAYER ══ */
 .more-section {
   max-width: 1000px;
   margin: 20px auto 0;
@@ -564,7 +578,7 @@ svg {
   font-weight: 700;
 }
 
-/* Upcoming Matches */
+/* ══ UPCOMING SECTION ══ */
 .upcoming-section {
   margin-top: 32px;
   border-top: 1px solid var(--border-color);
@@ -684,6 +698,7 @@ svg {
   color: var(--text-muted);
 }
 
+/* ══ STRICT HIDE LEGACY ══ */
 #sidebar, .sidebar, #drawer-backdrop {
   display: none !important;
 }
@@ -695,4 +710,44 @@ svg {
   padding: 30px 0;
   margin-top: 40px;
   border-top: 1px solid var(--border-color);
+}
+
+/* ══ MOBILE APP STYLES ══ */
+@media (max-width: 768px) {
+  .app {
+    padding: 12px 14px 40px;
+  }
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .header-right {
+    justify-content: space-between;
+  }
+  .search-wrap {
+    flex: 1;
+    width: auto;
+  }
+  .hero-card {
+    padding: 20px;
+    border-radius: 16px;
+  }
+  .hero-title {
+    font-size: 1.5rem;
+  }
+  .hero-stats {
+    gap: 16px;
+  }
+  .matches-list,
+  .upcoming-list {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .player-view {
+    padding: 12px 8px;
+  }
+  .player-wrap {
+    border-radius: 10px;
+  }
 }
