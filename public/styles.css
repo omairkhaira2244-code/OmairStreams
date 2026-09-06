@@ -1,4 +1,3 @@
-/* ── Theme Definitions & CSS Variables ── */
 :root,
 [data-theme="dark-neon"] {
   --bg-primary: #070b14;
@@ -52,7 +51,6 @@
   --pill-bg: rgba(192, 132, 252, 0.1);
 }
 
-/* ── Global Layout & Background ── */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -69,7 +67,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Welcoming Glow Layer */
 body::before {
   content: "";
   position: fixed;
@@ -93,7 +90,6 @@ body::before {
   z-index: 1;
 }
 
-/* ── Header & Navigation ── */
 .header {
   display: flex;
   align-items: center;
@@ -171,7 +167,6 @@ body::before {
   border-color: var(--accent-cyan);
 }
 
-/* ── Theme Switcher Menu ── */
 .theme-picker {
   display: flex;
   align-items: center;
@@ -202,7 +197,6 @@ body::before {
 .theme-dot[data-set-theme="emerald-pitch"] { background: #10b981; }
 .theme-dot[data-set-theme="cyber-violet"] { background: #a855f7; }
 
-/* ── Hero Dashboard Banner ── */
 .hero-card {
   position: relative;
   background: var(--bg-card);
@@ -288,7 +282,6 @@ body::before {
   letter-spacing: 1px;
 }
 
-/* ── Category Bar ── */
 .category-bar {
   margin-bottom: 24px;
 }
@@ -328,7 +321,6 @@ body::before {
   border-color: transparent;
 }
 
-/* ── Match Cards Grid ── */
 .matches-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -422,7 +414,6 @@ body::before {
   color: var(--text-muted);
 }
 
-/* ── Player Modal & View ── */
 .player-view {
   position: fixed;
   inset: 0;
@@ -472,7 +463,6 @@ body::before {
   display: block;
 }
 
-/* ── Footer ── */
 .footer {
   text-align: center;
   color: var(--text-muted);
