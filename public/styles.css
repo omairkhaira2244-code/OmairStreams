@@ -2,7 +2,7 @@
 [data-theme="dark-neon"] {
   --bg-primary: #070b14;
   --bg-secondary: #0c1424;
-  --bg-card: rgba(14, 23, 42, 0.7);
+  --bg-card: rgba(14, 23, 42, 0.75);
   --border-color: rgba(255, 255, 255, 0.08);
   --accent-cyan: #06b6d4;
   --accent-blue: #3b82f6;
@@ -56,7 +56,7 @@
   margin: 0;
   padding: 0;
   font-family: 'Outfit', sans-serif;
-  transition: background-color 0.25s ease, border-color 0.25s ease;
+  transition: background-color 0.2s ease;
 }
 
 body {
@@ -71,8 +71,22 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 16px 24px 60px;
-  position: relative;
-  z-index: 1;
+}
+
+/* ── STRICT HIDE FOR LEGACY ELEMENTS ── */
+#sidebar,
+.sidebar,
+#drawer-backdrop,
+.drawer-backdrop,
+.sidebar-channel-list-hidden,
+.channel-item,
+.group-label {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  width: 0 !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
 }
 
 /* Header */
@@ -88,7 +102,6 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
-  text-decoration: none;
 }
 
 .brand-icon img {
@@ -147,19 +160,14 @@ body {
   font-size: 0.85rem;
 }
 
-#channel-search:focus {
-  border-color: var(--accent-cyan);
-}
-
 /* Hero card */
 .hero-card {
-  position: relative;
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: 24px;
-  padding: 40px 36px;
+  padding: 36px;
   backdrop-filter: blur(16px);
-  margin-bottom: 30px;
+  margin-bottom: 28px;
 }
 
 .hero-live-pill {
@@ -174,7 +182,7 @@ body {
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 1px;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .hero-live-dot {
@@ -185,7 +193,7 @@ body {
 }
 
 .hero-title {
-  font-size: 2.2rem;
+  font-size: 2.1rem;
   font-weight: 900;
   line-height: 1.15;
   margin-bottom: 10px;
@@ -201,7 +209,7 @@ body {
 .hero-desc {
   color: var(--text-muted);
   font-size: 0.95rem;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .hero-stats {
@@ -215,7 +223,7 @@ body {
 }
 
 .stat-value {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: 800;
   color: var(--accent-cyan);
 }
@@ -224,10 +232,9 @@ body {
   font-size: 0.75rem;
   text-transform: uppercase;
   color: var(--text-muted);
-  letter-spacing: 1px;
 }
 
-/* Category pills */
+/* Categories */
 .category-bar {
   margin-bottom: 24px;
 }
@@ -258,7 +265,7 @@ body {
   border-color: transparent;
 }
 
-/* Grid & Cards */
+/* Matches Grid */
 .matches-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -296,19 +303,17 @@ body {
   display: block;
 }
 
-/* SVG Size Constraints (fixes oversized white icons) */
 .match-img-fb {
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--bg-secondary);
 }
 
 .match-img-fb svg {
-  width: 44px;
-  height: 44px;
+  width: 40px !important;
+  height: 40px !important;
   stroke: var(--text-muted);
 }
 
@@ -318,7 +323,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(0, 0, 0, 0.4);
   opacity: 0;
   transition: opacity 0.2s ease;
 }
@@ -328,9 +333,9 @@ body {
 }
 
 .match-play-overlay svg {
-  width: 38px;
-  height: 38px;
-  fill: #ffffff;
+  width: 36px !important;
+  height: 36px !important;
+  fill: #fff !important;
 }
 
 .match-live-badge {
@@ -406,9 +411,9 @@ body {
 .player-view {
   position: fixed;
   inset: 0;
-  background: rgba(3, 7, 18, 0.96);
+  background: rgba(3, 7, 18, 0.98);
   backdrop-filter: blur(12px);
-  z-index: 1000;
+  z-index: 9999;
   overflow-y: auto;
   padding: 24px;
 }
@@ -456,7 +461,6 @@ body {
   display: block;
 }
 
-/* Overlays & Loading inside Video */
 .player-overlay,
 .player-loading,
 .player-error {
@@ -480,8 +484,8 @@ body {
 
 .player-overlay svg,
 .player-error svg {
-  width: 48px;
-  height: 48px;
+  width: 44px !important;
+  height: 44px !important;
   stroke: var(--accent-cyan);
 }
 
@@ -506,7 +510,6 @@ body {
   padding: 40px 0;
   grid-column: 1 / -1;
   color: var(--text-muted);
-  gap: 12px;
 }
 
 /* Upcoming section */
@@ -530,8 +533,8 @@ body {
 }
 
 .upcoming-icon svg {
-  width: 22px;
-  height: 22px;
+  width: 20px !important;
+  height: 20px !important;
   stroke: var(--accent-cyan);
 }
 
@@ -591,8 +594,8 @@ body {
 }
 
 .upc-img-fb svg {
-  width: 32px;
-  height: 32px;
+  width: 32px !important;
+  height: 32px !important;
   stroke: var(--text-muted);
 }
 
@@ -630,8 +633,8 @@ body {
 }
 
 .upc-time-chip svg {
-  width: 12px;
-  height: 12px;
+  width: 12px !important;
+  height: 12px !important;
   stroke: var(--accent-cyan);
 }
 
@@ -646,7 +649,6 @@ body {
   color: var(--text-muted);
 }
 
-/* Footer */
 .footer {
   text-align: center;
   color: var(--text-muted);
