@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark-neon">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no" />
@@ -12,7 +12,6 @@
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="OmairStreams" />
   
   <title>OmairStreams — Live Sports Streaming Free</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -35,7 +34,15 @@
             <span class="brand-sub">Live Sports Streaming</span>
           </div>
         </div>
-        <div class="header-search">
+
+        <div class="header-right">
+          <div class="theme-picker" title="Switch Theme">
+            <button class="theme-dot active" data-set-theme="dark-neon" title="Dark Neon"></button>
+            <button class="theme-dot" data-set-theme="midnight-blue" title="Midnight Blue"></button>
+            <button class="theme-dot" data-set-theme="emerald-pitch" title="Emerald Pitch"></button>
+            <button class="theme-dot" data-set-theme="cyber-violet" title="Cyber Violet"></button>
+          </div>
+
           <div class="search-wrap">
             <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
@@ -43,6 +50,7 @@
             <input type="search" id="channel-search" placeholder="Search matches…" enterkeyhint="search" />
           </div>
         </div>
+
         <div id="channel-count" class="header-count" style="display:none">Loading…</div>
       </header>
 
@@ -100,7 +108,6 @@
       </div>
 
     </div><div id="player-view" class="player-view hidden">
-
       <header class="player-header">
         <div class="brand">
           <div class="brand-icon">
@@ -160,17 +167,11 @@
         </div>
         <div class="more-scroll" id="suggestions-scroll"></div>
       </div>
+    </div>
 
-    </div><div id="drawer-backdrop" class="drawer-backdrop hidden" aria-hidden="true"></div>
+    <div id="drawer-backdrop" class="drawer-backdrop hidden" aria-hidden="true"></div>
     <button type="button" id="btn-channels" style="display:none" aria-hidden="true"></button>
-    <aside id="sidebar" class="sidebar" aria-hidden="true">
-      <div class="sidebar-header">
-        <div class="sidebar-title-row">
-          <h2 class="sidebar-title mobile-only">Channels</h2>
-          <button type="button" id="btn-close-drawer" class="btn btn-icon mobile-only">Close</button>
-        </div>
-      </div>
-    </aside>
+    <aside id="sidebar" class="sidebar" aria-hidden="true"></aside>
 
     <footer class="footer">
       <span>OmairStreams</span>
@@ -186,6 +187,25 @@
   (function patchOmairStreams() {
     "use strict";
 
+    /* ── Theme Engine ── */
+    const themeDots = document.querySelectorAll(".theme-dot");
+    const savedTheme = localStorage.getItem("omair_theme") || "dark-neon";
+    function setTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem("omair_theme", theme);
+      themeDots.forEach(d => {
+        d.classList.toggle("active", d.dataset.setTheme === theme);
+      });
+    }
+    setTheme(savedTheme);
+    themeDots.forEach(dot => {
+      dot.addEventListener("click", (e) => {
+        e.stopPropagation();
+        setTheme(dot.dataset.setTheme);
+      });
+    });
+
+    /* ── DOM refs ── */
     const homeInner      = document.getElementById("home-view");
     const playerView     = document.getElementById("player-view");
     const channelList    = document.getElementById("channel-list");
