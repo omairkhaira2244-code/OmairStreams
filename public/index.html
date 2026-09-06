@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark-neon">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1" />
@@ -19,10 +19,8 @@
 <body>
   <div class="app" id="view-home">
 
-    <!-- ══ HOME VIEW ════════════════════════════════════════ -->
     <div id="home-view">
 
-      <!-- ══ HEADER ════════════════════════════════════════════ -->
       <header class="header">
         <div class="brand">
           <div class="brand-icon">
@@ -33,16 +31,7 @@
             <span class="brand-sub">Live Sports Streaming</span>
           </div>
         </div>
-
-        <div class="header-right" style="display:flex; align-items:center; gap:12px;">
-          <!-- Interactive Theme Selector -->
-          <div class="theme-picker" style="display:flex; gap:6px; background:var(--bg-card); padding:5px 8px; border:1px solid var(--border-color); border-radius:20px;">
-            <button class="theme-dot active" data-set-theme="dark-neon" title="Dark Neon" style="width:16px; height:16px; border-radius:50%; background:#06b6d4; border:none; cursor:pointer;"></button>
-            <button class="theme-dot" data-set-theme="midnight-blue" title="Midnight Blue" style="width:16px; height:16px; border-radius:50%; background:#3b82f6; border:none; cursor:pointer;"></button>
-            <button class="theme-dot" data-set-theme="emerald-pitch" title="Emerald Pitch" style="width:16px; height:16px; border-radius:50%; background:#10b981; border:none; cursor:pointer;"></button>
-            <button class="theme-dot" data-set-theme="cyber-violet" title="Cyber Violet" style="width:16px; height:16px; border-radius:50%; background:#a855f7; border:none; cursor:pointer;"></button>
-          </div>
-
+        <div class="header-search">
           <div class="search-wrap">
             <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
@@ -50,11 +39,9 @@
             <input type="search" id="channel-search" placeholder="Search matches…" enterkeyhint="search" />
           </div>
         </div>
-
         <div id="channel-count" class="header-count" style="display:none">Loading…</div>
       </header>
 
-      <!-- Hero card -->
       <div class="hero-card">
         <div class="hero-card-inner">
           <div class="hero-live-pill">
@@ -76,14 +63,10 @@
         </div>
       </div>
 
-      <!-- Category pills -->
       <div class="category-bar" id="category-bar" style="display:none">
-        <div class="category-scroll" id="category-scroll">
-          <!-- injected by JS -->
-        </div>
+        <div class="category-scroll" id="category-scroll"></div>
       </div>
 
-      <!-- Matches list -->
       <div class="matches-section" id="events-section" style="display:none">
         <div id="channel-list" class="matches-list">
           <div class="empty-state">
@@ -93,7 +76,6 @@
         </div>
       </div>
 
-      <!-- ══ UPCOMING TODAY ════════════════════════════════════ -->
       <div class="upcoming-section" id="upcoming-section" style="display:none">
         <div class="upcoming-header">
           <div class="upcoming-header-left">
@@ -113,12 +95,8 @@
         <div class="upcoming-list" id="upcoming-list"></div>
       </div>
 
-    </div><!-- /home-view -->
+    </div><div id="player-view" class="player-view hidden">
 
-    <!-- ══ PLAYER VIEW ══════════════════════════════════════ -->
-    <div id="player-view" class="player-view hidden">
-
-      <!-- Player header with back -->
       <header class="player-header">
         <div class="brand">
           <div class="brand-icon">
@@ -137,7 +115,6 @@
         </button>
       </header>
 
-      <!-- Video player -->
       <div class="player-wrap">
         <video id="video" controls playsinline webkit-playsinline x5-playsinline muted autoplay preload="auto"></video>
         <div id="player-overlay" class="player-overlay hidden">
@@ -164,137 +141,81 @@
         </div>
       </div>
 
-      <!-- Feature 1: Stream Quality Selector -->
-      <div class="quality-bar-wrap" id="quality-bar-wrap">
-        <div class="quality-label">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polygon points="12 2 2 7 12 12 22 7 12 2"/>
-            <polyline points="2 17 12 22 22 17"/>
-            <polyline points="2 12 12 17 22 12"/>
-          </svg>
-          Stream Quality:
-        </div>
-        <div class="quality-pills" id="quality-pills">
-          <button class="quality-pill active" data-quality="auto">Auto (1080p)</button>
-          <button class="quality-pill" data-quality="1080">1080p</button>
-          <button class="quality-pill" data-quality="720">720p</button>
-          <button class="quality-pill" data-quality="480">480p</button>
-        </div>
-      </div>
+      <div id="quality-selector" class="quality-selector hidden"></div>
 
-      <!-- Feature 2: Live Score & Match Stats Widget -->
-      <div class="stats-widget" id="stats-widget">
-        <div class="scoreboard-box">
-          <div class="score-header">
-            <span id="widget-league-name">MATCH ARENA</span>
-            <span class="score-live-tag">● LIVE STATS</span>
-          </div>
-          <div class="score-main">
-            <div class="team-box">
-              <div class="team-name-stat" id="stat-team-1">TEAM A</div>
-              <div class="team-pts" id="stat-score-1">1</div>
-            </div>
-            <div class="score-vs-divider">VS</div>
-            <div class="team-box">
-              <div class="team-name-stat" id="stat-team-2">TEAM B</div>
-              <div class="team-pts" id="stat-score-2">0</div>
-            </div>
-          </div>
-          <div class="stat-bars">
-            <div class="stat-row">
-              <span id="label-stat-1">Possession / Run Rate</span>
-              <strong id="val-stat-1">54% - 46%</strong>
-            </div>
-            <div class="stat-row">
-              <span id="label-stat-2">Shots / Boundaries</span>
-              <strong id="val-stat-2">8 (4) - 5 (2)</strong>
-            </div>
-          </div>
+      <div class="now-card" id="now-card">
+        <div class="now-live-pill">
+          <span class="now-live-dot"></span>
+          LIVE NOW
         </div>
-
-        <div class="feed-box">
-          <div class="feed-header">Live Match Feed</div>
-          <div class="feed-stream" id="feed-stream">
-            <div class="feed-item"><span class="time">NOW</span> High intensity play underway in the arena.</div>
-            <div class="feed-item"><span class="time">LIVE</span> Stream connection stabilized at high definition.</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Now-playing info card -->
-      <div class="now-card" id="now-card" style="max-width:960px; margin:0 auto 20px; text-align:center;">
         <div class="now-match">
-          <div class="now-teams" id="now-teams" style="font-size:1.2rem; font-weight:700;">
+          <div class="now-teams" id="now-teams">
             <span id="now-title">No channel selected</span>
           </div>
-          <div class="now-meta" style="margin-top:4px;">
-            <span id="now-group" class="now-group" style="color:var(--accent-cyan); font-size:0.85rem; text-transform:uppercase;"></span>
+          <div class="now-meta">
+            <span id="now-group" class="now-group"></span>
           </div>
+          <div id="now-url" class="now-url desktop-only"></div>
         </div>
+        <img id="now-logo" class="now-logo hidden" alt="" />
       </div>
 
-      <!-- More matches -->
-      <div class="more-section" id="suggestions-section" style="max-width:960px; margin:0 auto; display:none">
-        <div class="more-header" style="margin-bottom:12px; font-weight:700; font-size:0.85rem; color:var(--text-muted);">
-          <span class="more-title">MORE MATCHES LIVE NOW</span> (<span id="more-count"></span>)
+      <div class="more-section" id="suggestions-section" style="display:none">
+        <div class="more-header">
+          <span class="more-title">MORE MATCHES LIVE NOW</span>
+          <span class="more-count" id="more-count"></span>
         </div>
-        <div class="more-scroll" id="suggestions-scroll" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:14px;"></div>
+        <div class="more-scroll" id="suggestions-scroll"></div>
       </div>
 
-    </div><!-- /player-view -->
-
-    <!-- Legacy hooks required by app.js -->
-    <div id="drawer-backdrop" class="drawer-backdrop hidden" aria-hidden="true"></div>
+    </div><div id="drawer-backdrop" class="drawer-backdrop hidden" aria-hidden="true"></div>
     <button type="button" id="btn-channels" style="display:none" aria-hidden="true"></button>
-    <aside id="sidebar" class="sidebar" aria-hidden="true"></aside>
+    <aside id="sidebar" class="sidebar" aria-hidden="true">
+      <div class="sidebar-header">
+        <div class="sidebar-title-row">
+          <h2 class="sidebar-title mobile-only">Channels</h2>
+          <button type="button" id="btn-close-drawer" class="btn btn-icon mobile-only" aria-label="Close channels">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </aside>
 
     <footer class="footer">
       <span>OmairStreams</span>
       <span class="dot">·</span>
       <span>Live Sports Free</span>
     </footer>
-  </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.6.0/shaka-player.compiled.min.js"></script>
+  </div><script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.6.0/shaka-player.compiled.min.js"></script>
   <script src="app.js?v=17"></script>
 
   <script>
   (function patchOmairStreams() {
     "use strict";
 
-    /* ── Theme Switcher ── */
-    const themeDots = document.querySelectorAll(".theme-dot");
-    const savedTheme = localStorage.getItem("omair_theme") || "dark-neon";
-    function setTheme(theme) {
-      document.documentElement.setAttribute("data-theme", theme);
-      localStorage.setItem("omair_theme", theme);
-      themeDots.forEach(d => {
-        d.style.outline = d.dataset.setTheme === theme ? "2px solid #fff" : "none";
-        d.style.transform = d.dataset.setTheme === theme ? "scale(1.15)" : "scale(1)";
-      });
-    }
-    setTheme(savedTheme);
-    themeDots.forEach(dot => {
-      dot.addEventListener("click", () => setTheme(dot.dataset.setTheme));
-    });
-
-    /* ── DOM refs ── */
-    const homeInner       = document.getElementById("home-view");
-    const playerView      = document.getElementById("player-view");
-    const channelList     = document.getElementById("channel-list");
-    const sidebar         = document.getElementById("sidebar");
-    const categoryBar     = document.getElementById("category-bar");
-    const categoryScroll  = document.getElementById("category-scroll");
-    const eventsSection   = document.getElementById("events-section");
+    const homeView       = document.getElementById("view-home");
+    const homeInner      = document.getElementById("home-view");
+    const playerView     = document.getElementById("player-view");
+    const channelList    = document.getElementById("channel-list");
+    const sidebar        = document.getElementById("sidebar");
+    const categoryBar    = document.getElementById("category-bar");
+    const categoryScroll = document.getElementById("category-scroll");
+    const eventsSection  = document.getElementById("events-section");
     const suggestionsSection = document.getElementById("suggestions-section");
     const suggestionsScroll  = document.getElementById("suggestions-scroll");
-    const statEvents      = document.getElementById("stat-events");
-    const statCats        = document.getElementById("stat-cats");
-    const channelCountEl  = document.getElementById("channel-count");
-    const moreCount       = document.getElementById("more-count");
+    const statEvents     = document.getElementById("stat-events");
+    const statCats       = document.getElementById("stat-cats");
+    const channelCountEl = document.getElementById("channel-count");
+    const moreCount      = document.getElementById("more-count");
 
     const nowTeams  = document.getElementById("now-teams");
+    const nowTitle  = document.getElementById("now-title");
     const nowGroup  = document.getElementById("now-group");
+    const nowUrl    = document.getElementById("now-url");
+    const nowLogo   = document.getElementById("now-logo");
 
     let allChannelData = [];
     let activeGroup    = "All";
@@ -330,7 +251,7 @@
         vid.pause();
         vid.removeAttribute("src");
         vid.load();
-      } catch (e) {}
+      } catch (e) { }
       if (typeof window.__hlsInstance !== "undefined" && window.__hlsInstance) {
         try { window.__hlsInstance.destroy(); window.__hlsInstance = null; } catch (e) {}
       }
@@ -349,73 +270,6 @@
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    /* ── Live Score & Match Stat Widget Generator ── */
-    function updateMatchWidget(ch) {
-      const parsed = parseMatchTitle(ch.title);
-      const team1El = document.getElementById("stat-team-1");
-      const team2El = document.getElementById("stat-team-2");
-      const leagueEl = document.getElementById("widget-league-name");
-      const score1El = document.getElementById("stat-score-1");
-      const score2El = document.getElementById("stat-score-2");
-      const feedEl = document.getElementById("feed-stream");
-
-      if (parsed.hasVs) {
-        team1El.textContent = parsed.team1;
-        team2El.textContent = parsed.team2;
-      } else {
-        team1El.textContent = ch.title.slice(0, 18);
-        team2El.textContent = "LIVE";
-      }
-
-      leagueEl.textContent = (ch.group || "CHAMPIONSHIP").toUpperCase();
-
-      const isCricket = (ch.group || "").toLowerCase().includes("cricket");
-      if (isCricket) {
-        score1El.textContent = `${Math.floor(Math.random() * 80 + 100)}/${Math.floor(Math.random() * 5 + 1)}`;
-        score2El.textContent = `${Math.floor(Math.random() * 70 + 80)}/${Math.floor(Math.random() * 6 + 1)}`;
-        document.getElementById("label-stat-1").textContent = "Current Run Rate";
-        document.getElementById("val-stat-1").textContent = "8.42 RPO";
-        document.getElementById("label-stat-2").textContent = "Boundaries (4s / 6s)";
-        document.getElementById("val-stat-2").textContent = "14 / 6";
-      } else {
-        score1El.textContent = Math.floor(Math.random() * 3);
-        score2El.textContent = Math.floor(Math.random() * 2);
-        document.getElementById("label-stat-1").textContent = "Possession";
-        document.getElementById("val-stat-1").textContent = "54% - 46%";
-        document.getElementById("label-stat-2").textContent = "Shots on Target";
-        document.getElementById("val-stat-2").textContent = "6 (3) - 4 (2)";
-      }
-
-      feedEl.innerHTML = `
-        <div class="feed-item"><span class="time">LIVE</span> Stream active for ${esc(ch.title)}.</div>
-        <div class="feed-item"><span class="time">HD</span> Adaptive bitrate streaming connected.</div>
-      `;
-    }
-
-    /* ── Quality Selector Handler ── */
-    const qualityPills = document.querySelectorAll(".quality-pill");
-    qualityPills.forEach(pill => {
-      pill.addEventListener("click", () => {
-        qualityPills.forEach(p => p.classList.remove("active"));
-        pill.classList.add("active");
-        const targetH = pill.dataset.quality;
-
-        /* If Shaka Player instance is active */
-        if (window.__playerInstance && typeof window.__playerInstance.getVariantTracks === "function") {
-          try {
-            if (targetH === "auto") {
-              window.__playerInstance.configure({ abr: { enabled: true } });
-            } else {
-              window.__playerInstance.configure({ abr: { enabled: false } });
-              const tracks = window.__playerInstance.getVariantTracks();
-              const match = tracks.find(t => t.height === parseInt(targetH, 10));
-              if (match) window.__playerInstance.selectVariantTrack(match, true);
-            }
-          } catch (err) {}
-        }
-      });
-    });
-
     function buildMatchCard(ch) {
       const card = document.createElement("div");
       card.className = "match-card";
@@ -423,17 +277,12 @@
 
       const logoHtml = ch.logo
         ? `<img class="match-img" src="${esc(ch.logo)}" alt="${esc(ch.title)}" loading="lazy"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+               onerror="this.style.display='none'">`
         : "";
-      const imgFallback = `<div class="match-img-fb" style="${ch.logo ? "display:none" : "display:flex"}">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-            <rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/>
-          </svg>
-        </div>`;
 
       card.innerHTML = `
         <div class="match-thumb">
-          ${logoHtml}${imgFallback}
+          ${logoHtml}
           <div class="match-live-badge"><span class="match-live-dot"></span>LIVE</div>
           <div class="match-cat-badge">${esc(ch.group)}</div>
           <div class="match-play-overlay">
@@ -452,27 +301,22 @@
 
     function buildSugCard(ch) {
       const card = document.createElement("div");
-      card.className = "match-card";
+      card.className = "sug-card";
       card.dataset.url = ch.url;
 
       const logoHtml = ch.logo
-        ? `<img class="match-img" src="${esc(ch.logo)}" alt="" loading="lazy"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+        ? `<img class="sug-img" src="${esc(ch.logo)}" alt="" loading="lazy"
+               onerror="this.style.display='none'">`
         : "";
-      const imgFallback = `<div class="match-img-fb" style="${ch.logo ? "display:none" : "display:flex"}">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/>
-          </svg>
-        </div>`;
 
       card.innerHTML = `
-        <div class="match-thumb" style="height:110px;">
-          ${logoHtml}${imgFallback}
-          <div class="match-live-badge"><span class="match-live-dot"></span>LIVE</div>
-          <div class="match-cat-badge">${esc(ch.group)}</div>
+        <div class="sug-thumb">
+          ${logoHtml}
+          <div class="sug-live-badge"><span class="sug-live-dot"></span>LIVE</div>
+          <div class="sug-cat-badge">${esc(ch.group)}</div>
         </div>
-        <div class="match-info" style="padding:10px;">
-          <div class="match-teams" style="font-size:0.85rem;">${matchTitleHtml(ch.title)}</div>
+        <div class="sug-info">
+          <div class="sug-teams">${matchTitleHtml(ch.title)}</div>
         </div>
       `;
 
@@ -540,8 +384,17 @@
 
       if (nowTeams) nowTeams.innerHTML = matchTitleHtml(ch.title);
       if (nowGroup) nowGroup.textContent = ch.group;
+      if (nowUrl)   nowUrl.textContent   = ch.url;
+      if (nowLogo) {
+        if (ch.logo) {
+          nowLogo.src = ch.logo;
+          nowLogo.classList.remove("hidden");
+          nowLogo.onerror = () => nowLogo.classList.add("hidden");
+        } else {
+          nowLogo.classList.add("hidden");
+        }
+      }
 
-      updateMatchWidget(ch);
       showPlayer();
       renderSuggestions(ch.url);
     }
@@ -593,7 +446,7 @@
 
     observer.observe(channelList, { childList: true, subtree: false });
 
-    /* ── Upcoming matches scraper ── */
+    /* Upcoming parser */
     const RAW_JSON = "https://raw.githubusercontent.com/drmlive/fancode-live-events/refs/heads/main/fancode.json";
     const upcomingSection = document.getElementById("upcoming-section");
     const upcomingList    = document.getElementById("upcoming-list");
@@ -621,17 +474,12 @@
 
     function buildUpcomingCard(m, parsed) {
       const card = document.createElement("div");
-      card.className = "upcoming-card";
+      card.className = "match-card";
 
       const imgHtml = m.src
-        ? `<img class="upc-img" src="${esc(m.src)}" alt="" loading="lazy"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+        ? `<img class="match-img" src="${esc(m.src)}" alt="" loading="lazy"
+               onerror="this.style.display='none'">`
         : "";
-      const imgFb = `<div class="upc-img-fb" style="${m.src ? "display:none" : "display:flex"}">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-            <rect x="2" y="7" width="20" height="15" rx="2"/>
-          </svg>
-        </div>`;
 
       function fmtDate(dateStr) {
         if (!dateStr) return "";
@@ -646,22 +494,16 @@
       const timeLabel = parsed?.label || "";
 
       card.innerHTML = `
-        <div class="upc-thumb">
-          ${imgHtml}${imgFb}
-          <div class="upc-cat">${esc(cat)}</div>
+        <div class="match-thumb">
+          ${imgHtml}
+          <div class="match-cat-badge">${esc(cat)}</div>
         </div>
-        <div class="upc-body">
-          <div class="upc-datetime">
-            <span class="upc-date-chip">${esc(dateLabel)}</span>
-            <span class="upc-time-chip">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-              </svg>
-              ${esc(timeLabel)} IST
-            </span>
+        <div class="match-info">
+          <div style="font-size:0.75rem; color:var(--accent-cyan); font-weight:700; margin-bottom:4px;">
+            ${esc(dateLabel)} · ${esc(timeLabel)} IST
           </div>
-          <div class="upc-teams">${matchTitleHtml(m.match_name || m.title || "")}</div>
-          <div class="upc-event">${esc(m.event_name || "")}</div>
+          <div class="match-teams">${matchTitleHtml(m.match_name || m.title || "")}</div>
+          <div class="match-sub">${esc(m.event_name || "")}</div>
         </div>
       `;
 
@@ -702,7 +544,7 @@
           return;
         }
 
-        upcomingBadge.textContent = next10.length;
+        upcomingBadge.textContent = `${next10.length} Matches`;
         upcomingList.innerHTML = "";
         const frag = document.createDocumentFragment();
         next10.forEach(m => {
