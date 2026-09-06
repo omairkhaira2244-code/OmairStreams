@@ -1,23 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark-neon">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1" />
   <meta name="theme-color" content="#070b14" />
   <meta name="referrer" content="no-referrer" />
-  
-  <link rel="manifest" href="manifest.json" />
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="apple-touch-icon" href="logo.png" />
-  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  
+  <meta name="description" content="OmairStreams — Watch Formula 1, Cricket, Football and more live sports free in one place." />
   <title>OmairStreams — Live Sports Streaming Free</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=2" />
+  <link rel="stylesheet" href="styles.css?v=99" />
 </head>
 <body>
   <div class="app" id="view-home">
@@ -34,15 +31,7 @@
             <span class="brand-sub">Live Sports Streaming</span>
           </div>
         </div>
-
-        <div class="header-right">
-          <div class="theme-picker" title="Switch Theme">
-            <button type="button" class="theme-dot active" data-set-theme="dark-neon" title="Dark Neon"></button>
-            <button type="button" class="theme-dot" data-set-theme="midnight-blue" title="Midnight Blue"></button>
-            <button type="button" class="theme-dot" data-set-theme="emerald-pitch" title="Emerald Pitch"></button>
-            <button type="button" class="theme-dot" data-set-theme="cyber-violet" title="Cyber Violet"></button>
-          </div>
-
+        <div class="header-search">
           <div class="search-wrap">
             <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
@@ -50,7 +39,6 @@
             <input type="search" id="channel-search" placeholder="Search matches…" enterkeyhint="search" />
           </div>
         </div>
-
         <div id="channel-count" class="header-count" style="display:none">Loading…</div>
       </header>
 
@@ -76,7 +64,8 @@
       </div>
 
       <div class="category-bar" id="category-bar" style="display:none">
-        <div class="category-scroll" id="category-scroll"></div>
+        <div class="category-scroll" id="category-scroll">
+          </div>
       </div>
 
       <div class="matches-section" id="events-section" style="display:none">
@@ -108,6 +97,7 @@
       </div>
 
     </div><div id="player-view" class="player-view hidden">
+
       <header class="player-header">
         <div class="brand">
           <div class="brand-icon">
@@ -130,6 +120,10 @@
         <video id="video" controls playsinline webkit-playsinline x5-playsinline muted autoplay preload="auto"></video>
         <div id="player-overlay" class="player-overlay hidden">
           <div class="overlay-content">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="10"/>
+              <polygon points="10 8 16 12 10 16 10 8"/>
+            </svg>
             <p>Select a channel to start streaming</p>
           </div>
         </div>
@@ -138,6 +132,11 @@
           <span>Connecting to stream…</span>
         </div>
         <div id="player-error" class="player-error hidden">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
           <p id="error-message">Unable to play stream</p>
           <button type="button" id="btn-retry" class="btn btn-ghost">Retry</button>
         </div>
@@ -157,7 +156,9 @@
           <div class="now-meta">
             <span id="now-group" class="now-group"></span>
           </div>
+          <div id="now-url" class="now-url desktop-only"></div>
         </div>
+        <img id="now-logo" class="now-logo hidden" alt="" />
       </div>
 
       <div class="more-section" id="suggestions-section" style="display:none">
@@ -167,45 +168,35 @@
         </div>
         <div class="more-scroll" id="suggestions-scroll"></div>
       </div>
-    </div>
 
-    <div id="drawer-backdrop" class="drawer-backdrop hidden" aria-hidden="true"></div>
+    </div><div id="drawer-backdrop" class="drawer-backdrop hidden" aria-hidden="true"></div>
     <button type="button" id="btn-channels" style="display:none" aria-hidden="true"></button>
-    <aside id="sidebar" class="sidebar" aria-hidden="true" style="display:none"></aside>
+    <aside id="sidebar" class="sidebar" aria-hidden="true">
+      <div class="sidebar-header">
+        <div class="sidebar-title-row">
+          <h2 class="sidebar-title mobile-only">Channels</h2>
+          <button type="button" id="btn-close-drawer" class="btn btn-icon mobile-only" aria-label="Close channels">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </aside>
 
     <footer class="footer">
       <span>OmairStreams</span>
       <span class="dot">·</span>
       <span>Live Sports Free</span>
     </footer>
-  </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.6.0/shaka-player.compiled.min.js"></script>
+  </div><script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.6.0/shaka-player.compiled.min.js"></script>
   <script src="app.js?v=17"></script>
 
   <script>
   (function patchOmairStreams() {
     "use strict";
 
-    /* ── Theme Engine ── */
-    const themeDots = document.querySelectorAll(".theme-dot");
-    const savedTheme = localStorage.getItem("omair_theme") || "dark-neon";
-    function setTheme(theme) {
-      document.documentElement.setAttribute("data-theme", theme);
-      localStorage.setItem("omair_theme", theme);
-      themeDots.forEach(d => {
-        d.classList.toggle("active", d.dataset.setTheme === theme);
-      });
-    }
-    setTheme(savedTheme);
-    themeDots.forEach(dot => {
-      dot.addEventListener("click", (e) => {
-        e.stopPropagation();
-        setTheme(dot.dataset.setTheme);
-      });
-    });
-
-    /* ── DOM refs ── */
     const homeInner      = document.getElementById("home-view");
     const playerView     = document.getElementById("player-view");
     const channelList    = document.getElementById("channel-list");
@@ -222,6 +213,8 @@
 
     const nowTeams  = document.getElementById("now-teams");
     const nowGroup  = document.getElementById("now-group");
+    const nowUrl    = document.getElementById("now-url");
+    const nowLogo   = document.getElementById("now-logo");
 
     let allChannelData = [];
     let activeGroup    = "All";
@@ -265,38 +258,15 @@
 
     function showHome() {
       stopVideo();
-      homeInner.style.display = "block";
+      homeInner.style.display = "";
       playerView.classList.add("hidden");
-      playerView.style.display = "none";
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     function showPlayer() {
       homeInner.style.display = "none";
       playerView.classList.remove("hidden");
-      playerView.style.display = "block";
       window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    /* Reliable triggerPlay without CSS.escape bugs */
-    function triggerPlay(ch) {
-      if (!ch || !ch.url) return;
-
-      // Find the button using exact value match (handles symbols like ~ = ?)
-      const allButtons = Array.from(document.querySelectorAll(".channel-item"));
-      const targetBtn = allButtons.find(b => b.dataset.url === ch.url);
-
-      if (targetBtn) {
-        targetBtn.click();
-      } else if (typeof window.playChannel === "function") {
-        window.playChannel(ch);
-      }
-
-      if (nowTeams) nowTeams.innerHTML = matchTitleHtml(ch.title);
-      if (nowGroup) nowGroup.textContent = ch.group;
-
-      showPlayer();
-      renderSuggestions(ch.url);
     }
 
     function buildMatchCard(ch) {
@@ -378,7 +348,7 @@
       if (!categoryScroll) return;
       const groups = ["All", ...new Set(allChannelData.map(c => c.group).filter(Boolean).sort())];
       categoryScroll.innerHTML = groups.map(g =>
-        `<button type="button" class="cat-pill${g === "All" ? " active" : ""}" data-group="${esc(g)}">${esc(g)}</button>`
+        `<button class="cat-pill${g === "All" ? " active" : ""}" data-group="${esc(g)}">${esc(g)}</button>`
       ).join("");
       categoryScroll.querySelectorAll(".cat-pill").forEach(btn => {
         btn.addEventListener("click", () => {
@@ -399,6 +369,23 @@
         return mg && ms;
       });
       renderMatchCards(filtered);
+    }
+
+    function triggerPlay(ch) {
+      if (typeof window.playChannel === "function") {
+        window.playChannel(ch);
+      } else {
+        const btns = Array.from(sidebar.querySelectorAll(".channel-item"));
+        const found = btns.find(b => b.dataset.url === ch.url);
+        if (found) found.click();
+      }
+
+      if (nowTeams) nowTeams.innerHTML = matchTitleHtml(ch.title);
+      if (nowGroup) nowGroup.textContent = ch.group;
+      if (nowUrl)   nowUrl.textContent   = ch.url;
+
+      showPlayer();
+      renderSuggestions(ch.url);
     }
 
     document.getElementById("btn-back-home")?.addEventListener("click", showHome);
@@ -422,7 +409,7 @@
       if (!hiddenList) {
         hiddenList = document.createElement("div");
         hiddenList.className = "sidebar-channel-list-hidden";
-        hiddenList.style.display = "none";
+        hiddenList.setAttribute("aria-hidden", "true");
         sidebar.appendChild(hiddenList);
       }
       items.forEach(btn => hiddenList.appendChild(btn));
