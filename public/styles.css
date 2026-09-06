@@ -4,45 +4,13 @@
   padding: 0;
 }
 
-:root,
-[data-theme="dark-neon"] {
+:root {
   --bg-primary: #070b14;
   --bg-card: #0d1527;
   --border-color: rgba(255, 255, 255, 0.08);
   --accent-cyan: #06b6d4;
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
-  --accent-gradient: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
-}
-
-[data-theme="midnight-blue"] {
-  --bg-primary: #030712;
-  --bg-card: #0a192f;
-  --border-color: rgba(59, 130, 246, 0.2);
-  --accent-cyan: #38bdf8;
-  --text-main: #f1f5f9;
-  --text-muted: #818cf8;
-  --accent-gradient: linear-gradient(135deg, #38bdf8 0%, #1d4ed8 100%);
-}
-
-[data-theme="emerald-pitch"] {
-  --bg-primary: #05140d;
-  --bg-card: #0a2419;
-  --border-color: rgba(16, 185, 129, 0.2);
-  --accent-cyan: #10b981;
-  --text-main: #f0fdf4;
-  --text-muted: #6ee7b7;
-  --accent-gradient: linear-gradient(135deg, #34d399 0%, #059669 100%);
-}
-
-[data-theme="cyber-violet"] {
-  --bg-primary: #0d0714;
-  --bg-card: #1f0d36;
-  --border-color: rgba(168, 85, 247, 0.2);
-  --accent-cyan: #c084fc;
-  --text-main: #faf5ff;
-  --text-muted: #d8b4fe;
-  --accent-gradient: linear-gradient(135deg, #c084fc 0%, #7e22ce 100%);
 }
 
 html, body {
@@ -50,13 +18,18 @@ html, body {
   color: var(--text-main);
   font-family: 'Outfit', sans-serif;
   min-height: 100vh;
+  width: 100%;
   overflow-x: hidden;
-  transition: background-color 0.25s ease;
 }
 
 svg {
   max-width: 100%;
   max-height: 100%;
+}
+
+img {
+  max-width: 100%;
+  display: block;
 }
 
 .app {
@@ -65,13 +38,12 @@ svg {
   padding: 16px 20px 60px;
 }
 
-/* ══ HEADER & THEME SWITCHER ══ */
+/* Header */
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 14px 0 24px;
-  gap: 16px;
 }
 
 .brand {
@@ -89,9 +61,7 @@ svg {
 .brand-name {
   font-size: 1.3rem;
   font-weight: 800;
-  background: var(--accent-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #fff;
   display: block;
 }
 
@@ -102,45 +72,9 @@ svg {
   letter-spacing: 1px;
 }
 
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.theme-picker {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: var(--bg-card);
-  padding: 6px 10px;
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
-}
-
-.theme-dot {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  border: none;
-  cursor: pointer;
-  outline: none;
-  transition: transform 0.2s ease;
-}
-
-.theme-dot.active {
-  outline: 2px solid #ffffff;
-  transform: scale(1.15);
-}
-
-.theme-dot[data-set-theme="dark-neon"] { background: #06b6d4; }
-.theme-dot[data-set-theme="midnight-blue"] { background: #3b82f6; }
-.theme-dot[data-set-theme="emerald-pitch"] { background: #10b981; }
-.theme-dot[data-set-theme="cyber-violet"] { background: #a855f7; }
-
 .search-wrap {
   position: relative;
-  width: 220px;
+  width: 240px;
 }
 
 .search-icon {
@@ -163,7 +97,7 @@ svg {
   outline: none;
 }
 
-/* ══ HERO CARD ══ */
+/* Hero */
 .hero-card {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
@@ -200,9 +134,7 @@ svg {
 
 .hero-em-blue {
   font-style: normal;
-  background: var(--accent-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--accent-cyan);
 }
 
 .hero-desc {
@@ -228,7 +160,7 @@ svg {
   color: var(--text-muted);
 }
 
-/* ══ CATEGORY PILLS ══ */
+/* Categories */
 .category-bar {
   margin-bottom: 20px;
 }
@@ -257,7 +189,7 @@ svg {
   border-color: var(--accent-cyan);
 }
 
-/* ══ MATCH CARDS ══ */
+/* Matches Grid */
 .matches-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -270,12 +202,6 @@ svg {
   border-radius: 16px;
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.2s ease, border-color 0.2s ease;
-}
-
-.match-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--accent-cyan);
 }
 
 .match-thumb {
@@ -290,7 +216,6 @@ svg {
   width: 100%;
   height: 150px;
   object-fit: cover;
-  display: block;
 }
 
 .match-live-badge {
@@ -306,7 +231,6 @@ svg {
   display: flex;
   align-items: center;
   gap: 4px;
-  z-index: 2;
 }
 
 .match-live-dot {
@@ -325,10 +249,8 @@ svg {
   font-size: 0.65rem;
   padding: 2px 6px;
   border-radius: 4px;
-  z-index: 2;
 }
 
-/* FIX: pointer-events: none ensures this overlay NEVER blocks your clicks */
 .match-play-overlay {
   position: absolute;
   inset: 0;
@@ -337,8 +259,7 @@ svg {
   justify-content: center;
   background: rgba(0, 0, 0, 0.4);
   opacity: 0;
-  pointer-events: none !important;
-  transition: opacity 0.2s ease;
+  pointer-events: none;
 }
 
 .match-card:hover .match-play-overlay {
@@ -348,8 +269,7 @@ svg {
 .match-play-overlay svg {
   width: 32px !important;
   height: 32px !important;
-  fill: #fff !important;
-  pointer-events: none !important;
+  fill: #fff;
 }
 
 .match-info {
@@ -372,22 +292,14 @@ svg {
   color: var(--text-muted);
 }
 
-.lang-badge {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid var(--border-color);
-  padding: 1px 6px;
-  border-radius: 4px;
-  font-size: 0.7rem;
-  margin-right: 6px;
-}
-
-/* ══ VIDEO PLAYER VIEW ══ */
+/* Player View Container */
 .player-view {
   position: fixed;
   inset: 0;
   background: #050811;
   z-index: 99999;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 20px;
 }
 
@@ -419,7 +331,7 @@ svg {
 .player-wrap {
   width: 100%;
   max-width: 1000px;
-  margin: 0 auto 20px;
+  margin: 0 auto 16px;
   background: #000;
   border-radius: 12px;
   overflow: hidden;
@@ -442,7 +354,6 @@ svg {
   color: #fff;
   flex-direction: column;
   gap: 10px;
-  z-index: 5;
 }
 
 .player-overlay.hidden, .player-loading.hidden, .player-error.hidden {
@@ -468,16 +379,19 @@ svg {
   to { transform: rotate(360deg); }
 }
 
+/* Now-Playing Card Below Player (Fixes giant image & text bleed) */
 .now-card {
   max-width: 1000px;
   margin: 0 auto 20px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 16px;
   background: var(--bg-card);
   border: 1px solid var(--border-color);
-  padding: 16px;
+  padding: 16px 20px;
   border-radius: 12px;
+  overflow: hidden;
 }
 
 .now-live-pill {
@@ -500,8 +414,9 @@ svg {
 }
 
 .now-teams {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 800;
+  margin-top: 4px;
 }
 
 .now-meta {
@@ -510,7 +425,29 @@ svg {
   text-transform: uppercase;
 }
 
-/* ══ RECOMMENDATION CARDS UNDER PLAYER ══ */
+/* Completely hide the raw m3u8 string from cluttering the layout */
+.now-url,
+#now-url {
+  display: none !important;
+}
+
+/* Constrain channel logo cleanly */
+#now-logo,
+.now-logo {
+  max-width: 64px !important;
+  max-height: 64px !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.now-logo.hidden {
+  display: none !important;
+}
+
+/* More Matches Section */
 .more-section {
   max-width: 1000px;
   margin: 20px auto 0;
@@ -523,10 +460,16 @@ svg {
   margin-bottom: 12px;
 }
 
+.more-scroll {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+}
+
 .sug-card {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: 14px;
+  border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
 }
@@ -534,16 +477,15 @@ svg {
 .sug-thumb {
   position: relative;
   width: 100%;
-  height: 120px;
+  height: 110px;
   background: #020617;
   overflow: hidden;
 }
 
 .sug-img {
   width: 100%;
-  height: 120px;
+  height: 110px;
   object-fit: cover;
-  display: block;
 }
 
 .sug-live-badge {
@@ -578,7 +520,7 @@ svg {
   font-weight: 700;
 }
 
-/* ══ UPCOMING SECTION ══ */
+/* Upcoming Section */
 .upcoming-section {
   margin-top: 32px;
   border-top: 1px solid var(--border-color);
@@ -649,7 +591,6 @@ svg {
   width: 100%;
   height: 130px;
   object-fit: cover;
-  display: block;
 }
 
 .upc-cat {
@@ -677,77 +618,3 @@ svg {
   font-size: 0.72rem;
   color: var(--accent-cyan);
   font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.upc-time-chip svg {
-  width: 12px !important;
-  height: 12px !important;
-}
-
-.upc-teams {
-  font-size: 0.9rem;
-  font-weight: 700;
-  margin-bottom: 4px;
-}
-
-.upc-event {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
-
-/* ══ STRICT HIDE LEGACY ══ */
-#sidebar, .sidebar, #drawer-backdrop {
-  display: none !important;
-}
-
-.footer {
-  text-align: center;
-  color: var(--text-muted);
-  font-size: 0.85rem;
-  padding: 30px 0;
-  margin-top: 40px;
-  border-top: 1px solid var(--border-color);
-}
-
-/* ══ MOBILE APP STYLES ══ */
-@media (max-width: 768px) {
-  .app {
-    padding: 12px 14px 40px;
-  }
-  .header {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
-  }
-  .header-right {
-    justify-content: space-between;
-  }
-  .search-wrap {
-    flex: 1;
-    width: auto;
-  }
-  .hero-card {
-    padding: 20px;
-    border-radius: 16px;
-  }
-  .hero-title {
-    font-size: 1.5rem;
-  }
-  .hero-stats {
-    gap: 16px;
-  }
-  .matches-list,
-  .upcoming-list {
-    grid-template-columns: 1fr;
-    gap: 14px;
-  }
-  .player-view {
-    padding: 12px 8px;
-  }
-  .player-wrap {
-    border-radius: 10px;
-  }
-}
