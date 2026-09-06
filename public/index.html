@@ -2,14 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no" />
   <meta name="theme-color" content="#070b14" />
   <meta name="referrer" content="no-referrer" />
+  
+  <link rel="manifest" href="manifest.json" />
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="apple-touch-icon" href="logo.png" />
+  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="description" content="OmairStreams — Watch Formula 1, Cricket, Football and more live sports free in one place." />
+  <meta name="apple-mobile-web-app-title" content="OmairStreams" />
+  
   <title>OmairStreams — Live Sports Streaming Free</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -119,10 +123,6 @@
         <video id="video" controls playsinline webkit-playsinline x5-playsinline muted autoplay preload="auto"></video>
         <div id="player-overlay" class="player-overlay hidden">
           <div class="overlay-content">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <circle cx="12" cy="12" r="10"/>
-              <polygon points="10 8 16 12 10 16 10 8"/>
-            </svg>
             <p>Select a channel to start streaming</p>
           </div>
         </div>
@@ -131,11 +131,6 @@
           <span>Connecting to stream…</span>
         </div>
         <div id="player-error" class="player-error hidden">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"/>
-            <line x1="12" y1="8" x2="12" y2="12"/>
-            <line x1="12" y1="16" x2="12.01" y2="16"/>
-          </svg>
           <p id="error-message">Unable to play stream</p>
           <button type="button" id="btn-retry" class="btn btn-ghost">Retry</button>
         </div>
@@ -155,9 +150,7 @@
           <div class="now-meta">
             <span id="now-group" class="now-group"></span>
           </div>
-          <div id="now-url" class="now-url desktop-only"></div>
         </div>
-        <img id="now-logo" class="now-logo hidden" alt="" />
       </div>
 
       <div class="more-section" id="suggestions-section" style="display:none">
@@ -174,12 +167,7 @@
       <div class="sidebar-header">
         <div class="sidebar-title-row">
           <h2 class="sidebar-title mobile-only">Channels</h2>
-          <button type="button" id="btn-close-drawer" class="btn btn-icon mobile-only" aria-label="Close channels">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="18" y1="6" x2="6" y2="18"/>
-              <line x1="6" y1="6" x2="18" y2="18"/>
-            </svg>
-          </button>
+          <button type="button" id="btn-close-drawer" class="btn btn-icon mobile-only">Close</button>
         </div>
       </div>
     </aside>
@@ -189,14 +177,15 @@
       <span class="dot">·</span>
       <span>Live Sports Free</span>
     </footer>
-  </div><script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.6.0/shaka-player.compiled.min.js"></script>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.6.0/shaka-player.compiled.min.js"></script>
   <script src="app.js?v=17"></script>
 
   <script>
   (function patchOmairStreams() {
     "use strict";
 
-    const homeView       = document.getElementById("view-home");
     const homeInner      = document.getElementById("home-view");
     const playerView     = document.getElementById("player-view");
     const channelList    = document.getElementById("channel-list");
@@ -212,10 +201,7 @@
     const moreCount      = document.getElementById("more-count");
 
     const nowTeams  = document.getElementById("now-teams");
-    const nowTitle  = document.getElementById("now-title");
     const nowGroup  = document.getElementById("now-group");
-    const nowUrl    = document.getElementById("now-url");
-    const nowLogo   = document.getElementById("now-logo");
 
     let allChannelData = [];
     let activeGroup    = "All";
@@ -251,7 +237,7 @@
         vid.pause();
         vid.removeAttribute("src");
         vid.load();
-      } catch (e) { }
+      } catch (e) {}
       if (typeof window.__hlsInstance !== "undefined" && window.__hlsInstance) {
         try { window.__hlsInstance.destroy(); window.__hlsInstance = null; } catch (e) {}
       }
@@ -276,8 +262,7 @@
       card.dataset.url = ch.url;
 
       const logoHtml = ch.logo
-        ? `<img class="match-img" src="${esc(ch.logo)}" alt="${esc(ch.title)}" loading="lazy"
-               onerror="this.style.display='none'">`
+        ? `<img class="match-img" src="${esc(ch.logo)}" alt="${esc(ch.title)}" loading="lazy" onerror="this.style.display='none'">`
         : "";
 
       card.innerHTML = `
@@ -305,8 +290,7 @@
       card.dataset.url = ch.url;
 
       const logoHtml = ch.logo
-        ? `<img class="sug-img" src="${esc(ch.logo)}" alt="" loading="lazy"
-               onerror="this.style.display='none'">`
+        ? `<img class="sug-img" src="${esc(ch.logo)}" alt="" loading="lazy" onerror="this.style.display='none'">`
         : "";
 
       card.innerHTML = `
@@ -384,16 +368,6 @@
 
       if (nowTeams) nowTeams.innerHTML = matchTitleHtml(ch.title);
       if (nowGroup) nowGroup.textContent = ch.group;
-      if (nowUrl)   nowUrl.textContent   = ch.url;
-      if (nowLogo) {
-        if (ch.logo) {
-          nowLogo.src = ch.logo;
-          nowLogo.classList.remove("hidden");
-          nowLogo.onerror = () => nowLogo.classList.add("hidden");
-        } else {
-          nowLogo.classList.add("hidden");
-        }
-      }
 
       showPlayer();
       renderSuggestions(ch.url);
@@ -474,11 +448,10 @@
 
     function buildUpcomingCard(m, parsed) {
       const card = document.createElement("div");
-      card.className = "match-card";
+      card.className = "upcoming-card";
 
       const imgHtml = m.src
-        ? `<img class="match-img" src="${esc(m.src)}" alt="" loading="lazy"
-               onerror="this.style.display='none'">`
+        ? `<img class="upc-img" src="${esc(m.src)}" alt="" loading="lazy" onerror="this.style.display='none'">`
         : "";
 
       function fmtDate(dateStr) {
@@ -494,16 +467,22 @@
       const timeLabel = parsed?.label || "";
 
       card.innerHTML = `
-        <div class="match-thumb">
+        <div class="upc-thumb">
           ${imgHtml}
-          <div class="match-cat-badge">${esc(cat)}</div>
+          <div class="upc-cat">${esc(cat)}</div>
         </div>
-        <div class="match-info">
-          <div style="font-size:0.75rem; color:var(--accent-cyan); font-weight:700; margin-bottom:4px;">
-            ${esc(dateLabel)} · ${esc(timeLabel)} IST
+        <div class="upc-body">
+          <div class="upc-datetime">
+            <span class="upc-date-chip">${esc(dateLabel)}</span>
+            <span class="upc-time-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+              </svg>
+              ${esc(timeLabel)} IST
+            </span>
           </div>
-          <div class="match-teams">${matchTitleHtml(m.match_name || m.title || "")}</div>
-          <div class="match-sub">${esc(m.event_name || "")}</div>
+          <div class="upc-teams">${matchTitleHtml(m.match_name || m.title || "")}</div>
+          <div class="upc-event">${esc(m.event_name || "")}</div>
         </div>
       `;
 
