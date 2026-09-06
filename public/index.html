@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=2" />
 </head>
 <body>
   <div class="app" id="view-home">
@@ -37,10 +37,10 @@
 
         <div class="header-right">
           <div class="theme-picker" title="Switch Theme">
-            <button class="theme-dot active" data-set-theme="dark-neon" title="Dark Neon"></button>
-            <button class="theme-dot" data-set-theme="midnight-blue" title="Midnight Blue"></button>
-            <button class="theme-dot" data-set-theme="emerald-pitch" title="Emerald Pitch"></button>
-            <button class="theme-dot" data-set-theme="cyber-violet" title="Cyber Violet"></button>
+            <button type="button" class="theme-dot active" data-set-theme="dark-neon" title="Dark Neon"></button>
+            <button type="button" class="theme-dot" data-set-theme="midnight-blue" title="Midnight Blue"></button>
+            <button type="button" class="theme-dot" data-set-theme="emerald-pitch" title="Emerald Pitch"></button>
+            <button type="button" class="theme-dot" data-set-theme="cyber-violet" title="Cyber Violet"></button>
           </div>
 
           <div class="search-wrap">
@@ -171,7 +171,7 @@
 
     <div id="drawer-backdrop" class="drawer-backdrop hidden" aria-hidden="true"></div>
     <button type="button" id="btn-channels" style="display:none" aria-hidden="true"></button>
-    <aside id="sidebar" class="sidebar" aria-hidden="true"></aside>
+    <aside id="sidebar" class="sidebar" aria-hidden="true" style="display:none"></aside>
 
     <footer class="footer">
       <span>OmairStreams</span>
@@ -265,15 +265,38 @@
 
     function showHome() {
       stopVideo();
-      homeInner.style.display = "";
+      homeInner.style.display = "block";
       playerView.classList.add("hidden");
+      playerView.style.display = "none";
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     function showPlayer() {
       homeInner.style.display = "none";
       playerView.classList.remove("hidden");
+      playerView.style.display = "block";
       window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    /* Reliable triggerPlay without CSS.escape bugs */
+    function triggerPlay(ch) {
+      if (!ch || !ch.url) return;
+
+      // Find the button using exact value match (handles symbols like ~ = ?)
+      const allButtons = Array.from(document.querySelectorAll(".channel-item"));
+      const targetBtn = allButtons.find(b => b.dataset.url === ch.url);
+
+      if (targetBtn) {
+        targetBtn.click();
+      } else if (typeof window.playChannel === "function") {
+        window.playChannel(ch);
+      }
+
+      if (nowTeams) nowTeams.innerHTML = matchTitleHtml(ch.title);
+      if (nowGroup) nowGroup.textContent = ch.group;
+
+      showPlayer();
+      renderSuggestions(ch.url);
     }
 
     function buildMatchCard(ch) {
@@ -355,7 +378,7 @@
       if (!categoryScroll) return;
       const groups = ["All", ...new Set(allChannelData.map(c => c.group).filter(Boolean).sort())];
       categoryScroll.innerHTML = groups.map(g =>
-        `<button class="cat-pill${g === "All" ? " active" : ""}" data-group="${esc(g)}">${esc(g)}</button>`
+        `<button type="button" class="cat-pill${g === "All" ? " active" : ""}" data-group="${esc(g)}">${esc(g)}</button>`
       ).join("");
       categoryScroll.querySelectorAll(".cat-pill").forEach(btn => {
         btn.addEventListener("click", () => {
@@ -376,21 +399,6 @@
         return mg && ms;
       });
       renderMatchCards(filtered);
-    }
-
-    function triggerPlay(ch) {
-      if (typeof window.playChannel === "function") {
-        window.playChannel(ch);
-      } else {
-        const sidebarBtn = sidebar.querySelector(`.channel-item[data-url="${CSS.escape(ch.url)}"]`);
-        if (sidebarBtn) sidebarBtn.click();
-      }
-
-      if (nowTeams) nowTeams.innerHTML = matchTitleHtml(ch.title);
-      if (nowGroup) nowGroup.textContent = ch.group;
-
-      showPlayer();
-      renderSuggestions(ch.url);
     }
 
     document.getElementById("btn-back-home")?.addEventListener("click", showHome);
@@ -414,7 +422,7 @@
       if (!hiddenList) {
         hiddenList = document.createElement("div");
         hiddenList.className = "sidebar-channel-list-hidden";
-        hiddenList.setAttribute("aria-hidden", "true");
+        hiddenList.style.display = "none";
         sidebar.appendChild(hiddenList);
       }
       items.forEach(btn => hiddenList.appendChild(btn));
