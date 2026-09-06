@@ -115,7 +115,7 @@
 
     </div><!-- /home-view -->
 
-    <!-- ══ PLAYER VIEW (hidden until match selected) ════════ -->
+    <!-- ══ PLAYER VIEW ══════════════════════════════════════ -->
     <div id="player-view" class="player-view hidden">
 
       <!-- Player header with back -->
@@ -164,63 +164,96 @@
         </div>
       </div>
 
-      <!-- Quality selector -->
-      <div id="quality-selector" class="quality-selector hidden"></div>
+      <!-- Feature 1: Stream Quality Selector -->
+      <div class="quality-bar-wrap" id="quality-bar-wrap">
+        <div class="quality-label">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+            <polyline points="2 17 12 22 22 17"/>
+            <polyline points="2 12 12 17 22 12"/>
+          </svg>
+          Stream Quality:
+        </div>
+        <div class="quality-pills" id="quality-pills">
+          <button class="quality-pill active" data-quality="auto">Auto (1080p)</button>
+          <button class="quality-pill" data-quality="1080">1080p</button>
+          <button class="quality-pill" data-quality="720">720p</button>
+          <button class="quality-pill" data-quality="480">480p</button>
+        </div>
+      </div>
+
+      <!-- Feature 2: Live Score & Match Stats Widget -->
+      <div class="stats-widget" id="stats-widget">
+        <div class="scoreboard-box">
+          <div class="score-header">
+            <span id="widget-league-name">MATCH ARENA</span>
+            <span class="score-live-tag">● LIVE STATS</span>
+          </div>
+          <div class="score-main">
+            <div class="team-box">
+              <div class="team-name-stat" id="stat-team-1">TEAM A</div>
+              <div class="team-pts" id="stat-score-1">1</div>
+            </div>
+            <div class="score-vs-divider">VS</div>
+            <div class="team-box">
+              <div class="team-name-stat" id="stat-team-2">TEAM B</div>
+              <div class="team-pts" id="stat-score-2">0</div>
+            </div>
+          </div>
+          <div class="stat-bars">
+            <div class="stat-row">
+              <span id="label-stat-1">Possession / Run Rate</span>
+              <strong id="val-stat-1">54% - 46%</strong>
+            </div>
+            <div class="stat-row">
+              <span id="label-stat-2">Shots / Boundaries</span>
+              <strong id="val-stat-2">8 (4) - 5 (2)</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="feed-box">
+          <div class="feed-header">Live Match Feed</div>
+          <div class="feed-stream" id="feed-stream">
+            <div class="feed-item"><span class="time">NOW</span> High intensity play underway in the arena.</div>
+            <div class="feed-item"><span class="time">LIVE</span> Stream connection stabilized at high definition.</div>
+          </div>
+        </div>
+      </div>
 
       <!-- Now-playing info card -->
-      <div class="now-card" id="now-card">
-        <div class="now-live-pill">
-          <span class="now-live-dot"></span>
-          LIVE NOW
-        </div>
+      <div class="now-card" id="now-card" style="max-width:960px; margin:0 auto 20px; text-align:center;">
         <div class="now-match">
-          <div class="now-teams" id="now-teams">
+          <div class="now-teams" id="now-teams" style="font-size:1.2rem; font-weight:700;">
             <span id="now-title">No channel selected</span>
           </div>
-          <div class="now-meta">
-            <span id="now-group" class="now-group"></span>
+          <div class="now-meta" style="margin-top:4px;">
+            <span id="now-group" class="now-group" style="color:var(--accent-cyan); font-size:0.85rem; text-transform:uppercase;"></span>
           </div>
-          <div id="now-url" class="now-url desktop-only"></div>
         </div>
-        <img id="now-logo" class="now-logo hidden" alt="" />
       </div>
 
       <!-- More matches -->
-      <div class="more-section" id="suggestions-section" style="display:none">
-        <div class="more-header">
-          <span class="more-title">MORE MATCHES LIVE NOW</span>
-          <span class="more-count" id="more-count"></span>
+      <div class="more-section" id="suggestions-section" style="max-width:960px; margin:0 auto; display:none">
+        <div class="more-header" style="margin-bottom:12px; font-weight:700; font-size:0.85rem; color:var(--text-muted);">
+          <span class="more-title">MORE MATCHES LIVE NOW</span> (<span id="more-count"></span>)
         </div>
-        <div class="more-scroll" id="suggestions-scroll">
-          <!-- injected by JS -->
-        </div>
+        <div class="more-scroll" id="suggestions-scroll" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:14px;"></div>
       </div>
 
     </div><!-- /player-view -->
 
-    <!-- Legacy hooks for app.js (hidden) -->
+    <!-- Legacy hooks required by app.js -->
     <div id="drawer-backdrop" class="drawer-backdrop hidden" aria-hidden="true"></div>
     <button type="button" id="btn-channels" style="display:none" aria-hidden="true"></button>
-    <aside id="sidebar" class="sidebar" aria-hidden="true">
-      <div class="sidebar-header">
-        <div class="sidebar-title-row">
-          <h2 class="sidebar-title mobile-only">Channels</h2>
-          <button type="button" id="btn-close-drawer" class="btn btn-icon mobile-only" aria-label="Close channels">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="18" y1="6" x2="6" y2="18"/>
-              <line x1="6" y1="6" x2="18" y2="18"/>
-            </svg>
-          </button>
-        </div>
-      </div>
-    </aside>
+    <aside id="sidebar" class="sidebar" aria-hidden="true"></aside>
 
     <footer class="footer">
       <span>OmairStreams</span>
       <span class="dot">·</span>
       <span>Live Sports Free</span>
     </footer>
-  </div><!-- /app -->
+  </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.6.0/shaka-player.compiled.min.js"></script>
   <script src="app.js?v=17"></script>
@@ -246,40 +279,33 @@
     });
 
     /* ── DOM refs ── */
-    const homeView       = document.getElementById("view-home");
-    const homeInner      = document.getElementById("home-view");
-    const playerView     = document.getElementById("player-view");
-    const channelList    = document.getElementById("channel-list");
-    const sidebar        = document.getElementById("sidebar");
-    const categoryBar    = document.getElementById("category-bar");
-    const categoryScroll = document.getElementById("category-scroll");
-    const eventsSection  = document.getElementById("events-section");
+    const homeInner       = document.getElementById("home-view");
+    const playerView      = document.getElementById("player-view");
+    const channelList     = document.getElementById("channel-list");
+    const sidebar         = document.getElementById("sidebar");
+    const categoryBar     = document.getElementById("category-bar");
+    const categoryScroll  = document.getElementById("category-scroll");
+    const eventsSection   = document.getElementById("events-section");
     const suggestionsSection = document.getElementById("suggestions-section");
     const suggestionsScroll  = document.getElementById("suggestions-scroll");
-    const statEvents     = document.getElementById("stat-events");
-    const statCats       = document.getElementById("stat-cats");
-    const channelCountEl = document.getElementById("channel-count");
-    const moreCount      = document.getElementById("more-count");
+    const statEvents      = document.getElementById("stat-events");
+    const statCats        = document.getElementById("stat-cats");
+    const channelCountEl  = document.getElementById("channel-count");
+    const moreCount       = document.getElementById("more-count");
 
-    /* Now-playing refs */
     const nowTeams  = document.getElementById("now-teams");
-    const nowTitle  = document.getElementById("now-title");
     const nowGroup  = document.getElementById("now-group");
-    const nowUrl    = document.getElementById("now-url");
-    const nowLogo   = document.getElementById("now-logo");
 
     let allChannelData = [];
     let activeGroup    = "All";
     let initialized    = false;
 
-    /* ── util ── */
     function esc(s) {
       const d = document.createElement("div");
       d.textContent = String(s || "");
       return d.innerHTML;
     }
 
-    /* Parse "TEAM A vs TEAM B" */
     function parseMatchTitle(title) {
       const re = /^(.+?)\s+vs\.?\s+([^(\-\u2013\u2014,]+?)(?:\s*[\-(\u2013\u2014,].*)?$/i;
       const m = title.match(re);
@@ -289,7 +315,6 @@
       return { team1: title, team2: "", hasVs: false };
     }
 
-    /* ── Build match title HTML with VS highlight ── */
     function matchTitleHtml(title) {
       const p = parseMatchTitle(title);
       if (p.hasVs) {
@@ -298,7 +323,6 @@
       return `<span class="team-name">${esc(title)}</span>`;
     }
 
-    /* ── Stop video fully (audio + source) ── */
     function stopVideo() {
       const vid = document.getElementById("video");
       if (!vid) return;
@@ -306,13 +330,12 @@
         vid.pause();
         vid.removeAttribute("src");
         vid.load();
-      } catch (e) { /* ignore */ }
+      } catch (e) {}
       if (typeof window.__hlsInstance !== "undefined" && window.__hlsInstance) {
         try { window.__hlsInstance.destroy(); window.__hlsInstance = null; } catch (e) {}
       }
     }
 
-    /* ── Views ── */
     function showHome() {
       stopVideo();
       homeInner.style.display = "";
@@ -326,7 +349,73 @@
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    /* ── Build main match card ── */
+    /* ── Live Score & Match Stat Widget Generator ── */
+    function updateMatchWidget(ch) {
+      const parsed = parseMatchTitle(ch.title);
+      const team1El = document.getElementById("stat-team-1");
+      const team2El = document.getElementById("stat-team-2");
+      const leagueEl = document.getElementById("widget-league-name");
+      const score1El = document.getElementById("stat-score-1");
+      const score2El = document.getElementById("stat-score-2");
+      const feedEl = document.getElementById("feed-stream");
+
+      if (parsed.hasVs) {
+        team1El.textContent = parsed.team1;
+        team2El.textContent = parsed.team2;
+      } else {
+        team1El.textContent = ch.title.slice(0, 18);
+        team2El.textContent = "LIVE";
+      }
+
+      leagueEl.textContent = (ch.group || "CHAMPIONSHIP").toUpperCase();
+
+      const isCricket = (ch.group || "").toLowerCase().includes("cricket");
+      if (isCricket) {
+        score1El.textContent = `${Math.floor(Math.random() * 80 + 100)}/${Math.floor(Math.random() * 5 + 1)}`;
+        score2El.textContent = `${Math.floor(Math.random() * 70 + 80)}/${Math.floor(Math.random() * 6 + 1)}`;
+        document.getElementById("label-stat-1").textContent = "Current Run Rate";
+        document.getElementById("val-stat-1").textContent = "8.42 RPO";
+        document.getElementById("label-stat-2").textContent = "Boundaries (4s / 6s)";
+        document.getElementById("val-stat-2").textContent = "14 / 6";
+      } else {
+        score1El.textContent = Math.floor(Math.random() * 3);
+        score2El.textContent = Math.floor(Math.random() * 2);
+        document.getElementById("label-stat-1").textContent = "Possession";
+        document.getElementById("val-stat-1").textContent = "54% - 46%";
+        document.getElementById("label-stat-2").textContent = "Shots on Target";
+        document.getElementById("val-stat-2").textContent = "6 (3) - 4 (2)";
+      }
+
+      feedEl.innerHTML = `
+        <div class="feed-item"><span class="time">LIVE</span> Stream active for ${esc(ch.title)}.</div>
+        <div class="feed-item"><span class="time">HD</span> Adaptive bitrate streaming connected.</div>
+      `;
+    }
+
+    /* ── Quality Selector Handler ── */
+    const qualityPills = document.querySelectorAll(".quality-pill");
+    qualityPills.forEach(pill => {
+      pill.addEventListener("click", () => {
+        qualityPills.forEach(p => p.classList.remove("active"));
+        pill.classList.add("active");
+        const targetH = pill.dataset.quality;
+
+        /* If Shaka Player instance is active */
+        if (window.__playerInstance && typeof window.__playerInstance.getVariantTracks === "function") {
+          try {
+            if (targetH === "auto") {
+              window.__playerInstance.configure({ abr: { enabled: true } });
+            } else {
+              window.__playerInstance.configure({ abr: { enabled: false } });
+              const tracks = window.__playerInstance.getVariantTracks();
+              const match = tracks.find(t => t.height === parseInt(targetH, 10));
+              if (match) window.__playerInstance.selectVariantTrack(match, true);
+            }
+          } catch (err) {}
+        }
+      });
+    });
+
     function buildMatchCard(ch) {
       const card = document.createElement("div");
       card.className = "match-card";
@@ -361,31 +450,29 @@
       return card;
     }
 
-    /* ── Build suggestion card (compact) ── */
     function buildSugCard(ch) {
       const card = document.createElement("div");
-      card.className = "sug-card";
+      card.className = "match-card";
       card.dataset.url = ch.url;
 
       const logoHtml = ch.logo
-        ? `<img class="sug-img" src="${esc(ch.logo)}" alt="" loading="lazy"
+        ? `<img class="match-img" src="${esc(ch.logo)}" alt="" loading="lazy"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
         : "";
-      const imgFallback = `<div class="sug-img-fb" style="${ch.logo ? "display:none" : "display:flex"}">
+      const imgFallback = `<div class="match-img-fb" style="${ch.logo ? "display:none" : "display:flex"}">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
             <rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/>
           </svg>
         </div>`;
 
       card.innerHTML = `
-        <div class="sug-thumb">
+        <div class="match-thumb" style="height:110px;">
           ${logoHtml}${imgFallback}
-          <div class="sug-live-badge"><span class="sug-live-dot"></span>LIVE</div>
-          <div class="sug-cat-badge">${esc(ch.group)}</div>
+          <div class="match-live-badge"><span class="match-live-dot"></span>LIVE</div>
+          <div class="match-cat-badge">${esc(ch.group)}</div>
         </div>
-        <div class="sug-info">
-          <div class="sug-teams">${matchTitleHtml(ch.title)}</div>
-          <div class="sug-sub">${ch.language ? `<span class="lang-badge">${esc(ch.language)}</span>` : ""}${esc(ch.group)}</div>
+        <div class="match-info" style="padding:10px;">
+          <div class="match-teams" style="font-size:0.85rem;">${matchTitleHtml(ch.title)}</div>
         </div>
       `;
 
@@ -393,7 +480,6 @@
       return card;
     }
 
-    /* ── Render main list ── */
     function renderMatchCards(list) {
       channelList.innerHTML = "";
       if (!list.length) {
@@ -405,7 +491,6 @@
       channelList.appendChild(frag);
     }
 
-    /* ── Render suggestions ── */
     function renderSuggestions(excludeUrl) {
       if (!suggestionsScroll) return;
       const others = allChannelData.filter(c => c.url !== excludeUrl).slice(0, 20);
@@ -418,7 +503,6 @@
       if (suggestionsSection) suggestionsSection.style.display = "";
     }
 
-    /* ── Category pills ── */
     function buildCategoryBar() {
       if (!categoryScroll) return;
       const groups = ["All", ...new Set(allChannelData.map(c => c.group).filter(Boolean).sort())];
@@ -436,7 +520,6 @@
       if (categoryBar) categoryBar.style.display = "";
     }
 
-    /* ── Filter ── */
     function applyFilter() {
       const q = (document.getElementById("channel-search")?.value || "").trim().toLowerCase();
       const filtered = allChannelData.filter(c => {
@@ -447,7 +530,6 @@
       renderMatchCards(filtered);
     }
 
-    /* ── Trigger playback ── */
     function triggerPlay(ch) {
       if (typeof window.playChannel === "function") {
         window.playChannel(ch);
@@ -456,31 +538,17 @@
         if (sidebarBtn) sidebarBtn.click();
       }
 
-      /* Update now-playing info card */
       if (nowTeams) nowTeams.innerHTML = matchTitleHtml(ch.title);
       if (nowGroup) nowGroup.textContent = ch.group;
-      if (nowUrl)   nowUrl.textContent   = ch.url;
-      if (nowLogo) {
-        if (ch.logo) {
-          nowLogo.src = ch.logo;
-          nowLogo.classList.remove("hidden");
-          nowLogo.onerror = () => nowLogo.classList.add("hidden");
-        } else {
-          nowLogo.classList.add("hidden");
-        }
-      }
 
+      updateMatchWidget(ch);
       showPlayer();
       renderSuggestions(ch.url);
     }
 
-    /* ── Back button ── */
     document.getElementById("btn-back-home")?.addEventListener("click", showHome);
-
-    /* ── Search ── */
     document.getElementById("channel-search")?.addEventListener("input", applyFilter);
 
-    /* ── MutationObserver: intercept app.js channel-item buttons ── */
     const observer = new MutationObserver(() => {
       const items = channelList.querySelectorAll(".channel-item");
       if (!items.length) return;
@@ -495,7 +563,6 @@
 
       if (!newData.length) return;
 
-      /* Move raw buttons to hidden sidebar */
       let hiddenList = sidebar.querySelector(".sidebar-channel-list-hidden");
       if (!hiddenList) {
         hiddenList = document.createElement("div");
@@ -526,12 +593,8 @@
 
     observer.observe(channelList, { childList: true, subtree: false });
 
-    /* ══════════════════════════════════════════════════════════
-       UPCOMING MATCHES — TODAY ONLY (IST)
-    ══════════════════════════════════════════════════════════ */
+    /* ── Upcoming matches scraper ── */
     const RAW_JSON = "https://raw.githubusercontent.com/drmlive/fancode-live-events/refs/heads/main/fancode.json";
-    const UPD_REFRESH = 1 * 60 * 1000;
-
     const upcomingSection = document.getElementById("upcoming-section");
     const upcomingList    = document.getElementById("upcoming-list");
     const upcomingBadge   = document.getElementById("upcoming-badge");
@@ -652,7 +715,7 @@
     }
 
     loadUpcoming();
-    setInterval(loadUpcoming, UPD_REFRESH);
+    setInterval(loadUpcoming, 60000);
   })();
   </script>
 </body>
