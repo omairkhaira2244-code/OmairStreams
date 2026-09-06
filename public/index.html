@@ -9,8 +9,8 @@
   <link rel="apple-touch-icon" href="logo.png" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="description" content="DeepStream — Watch Formula 1, Cricket, Football and more live sports free in one place." />
-  <title>DeepStream — Live Sports Streaming Free</title>
+  <meta name="description" content="OmairStreams — Watch Formula 1, Cricket, Football and more live sports free in one place." />
+  <title>OmairStreams — Live Sports Streaming Free</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -24,26 +24,25 @@
 
       <!-- ══ HEADER ════════════════════════════════════════════ -->
       <header class="header">
-      <div class="brand">
-        <div class="brand-icon">
-          <img src="logo.png" alt="DeepStream" class="brand-logo-img" />
+        <div class="brand">
+          <div class="brand-icon">
+            <img src="logo.png" alt="OmairStreams" class="brand-logo-img" />
+          </div>
+          <div class="brand-text">
+            <span class="brand-name">OmairStreams</span>
+            <span class="brand-sub">Live Sports Streaming</span>
+          </div>
         </div>
-        <div class="brand-text">
-          <span class="brand-name">DeepStream</span>
-          <span class="brand-sub">Live Sports Streaming</span>
+        <div class="header-search">
+          <div class="search-wrap">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            </svg>
+            <input type="search" id="channel-search" placeholder="Search matches…" enterkeyhint="search" />
+          </div>
         </div>
-      </div>
-      <div class="header-search">
-        <div class="search-wrap">
-          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-          </svg>
-          <input type="search" id="channel-search" placeholder="Search matches…" enterkeyhint="search" />
-        </div>
-      </div>
-      <div id="channel-count" class="header-count" style="display:none">Loading…</div>
-    </header>
-
+        <div id="channel-count" class="header-count" style="display:none">Loading…</div>
+      </header>
 
       <!-- Hero card -->
       <div class="hero-card">
@@ -53,7 +52,7 @@
             STREAMING NOW
           </div>
           <h1 class="hero-title">EVERY LIVE MATCH.<br><em class="hero-em-blue">ONE PLACE.</em></h1>
-          <p class="hero-desc">Watch Formula 1, Cricket, Football, Kabaddi &amp; more — all free only at Deepstream.</p>
+          <p class="hero-desc">Watch Formula 1, Cricket, Football, Kabaddi &amp; more — all free only at OmairStreams.</p>
           <div class="hero-stats" id="hero-stats">
             <div class="hero-stat">
               <span class="stat-value" id="stat-events">—</span>
@@ -113,10 +112,10 @@
       <header class="player-header">
         <div class="brand">
           <div class="brand-icon">
-            <img src="logo.png" alt="DeepStream" class="brand-logo-img" />
+            <img src="logo.png" alt="OmairStreams" class="brand-logo-img" />
           </div>
           <div class="brand-text">
-            <span class="brand-name">DeepStream</span>
+            <span class="brand-name">OmairStreams</span>
             <span class="brand-sub">Live Sports Streaming</span>
           </div>
         </div>
@@ -207,7 +206,7 @@
     </aside>
 
     <footer class="footer">
-      <span>DeepStream</span>
+      <span>OmairStreams</span>
       <span class="dot">·</span>
       <span>Live Sports Free</span>
     </footer>
@@ -217,24 +216,24 @@
   <script src="app.js?v=17"></script>
 
   <script>
-  (function patchDeepStream() {
+  (function patchOmairStreams() {
     "use strict";
 
     /* ── DOM refs ── */
-    const homeView       = document.getElementById("view-home");
-    const homeInner      = document.getElementById("home-view");
-    const playerView     = document.getElementById("player-view");
-    const channelList    = document.getElementById("channel-list");
-    const sidebar        = document.getElementById("sidebar");
-    const categoryBar    = document.getElementById("category-bar");
-    const categoryScroll = document.getElementById("category-scroll");
-    const eventsSection  = document.getElementById("events-section");
+    const homeView        = document.getElementById("view-home");
+    const homeInner       = document.getElementById("home-view");
+    const playerView      = document.getElementById("player-view");
+    const channelList     = document.getElementById("channel-list");
+    const sidebar         = document.getElementById("sidebar");
+    const categoryBar     = document.getElementById("category-bar");
+    const categoryScroll  = document.getElementById("category-scroll");
+    const eventsSection   = document.getElementById("events-section");
     const suggestionsSection = document.getElementById("suggestions-section");
     const suggestionsScroll  = document.getElementById("suggestions-scroll");
-    const statEvents     = document.getElementById("stat-events");
-    const statCats       = document.getElementById("stat-cats");
-    const channelCountEl = document.getElementById("channel-count");
-    const moreCount      = document.getElementById("more-count");
+    const statEvents      = document.getElementById("stat-events");
+    const statCats        = document.getElementById("stat-cats");
+    const channelCountEl  = document.getElementById("channel-count");
+    const moreCount       = document.getElementById("more-count");
 
     /* Now-playing refs */
     const nowTeams  = document.getElementById("now-teams");
@@ -256,8 +255,6 @@
 
     /* Parse "TEAM A vs TEAM B" — stops team2 at (, -, –, or , so tournament info is excluded */
     function parseMatchTitle(title) {
-      /* Match: anything TEAM1 <whitespace> vs <whitespace> TEAM2
-         TEAM2 stops at: ( - – , — so we get clean team names only */
       const re = /^(.+?)\s+vs\.?\s+([^(\-\u2013\u2014,]+?)(?:\s*[\-(\u2013\u2014,].*)?$/i;
       const m = title.match(re);
       if (m && m[1] && m[2]) {
@@ -280,11 +277,10 @@
       const vid = document.getElementById("video");
       if (!vid) return;
       try {
-        vid.pause();                    // stop audio immediately
-        vid.removeAttribute("src");     // detach any direct src
-        vid.load();                     // reset media element
+        vid.pause();
+        vid.removeAttribute("src");
+        vid.load();
       } catch (e) { /* ignore */ }
-      /* Also destroy HLS instance if app.js exposed it */
       if (typeof window.__hlsInstance !== "undefined" && window.__hlsInstance) {
         try { window.__hlsInstance.destroy(); window.__hlsInstance = null; } catch (e) {}
       }
@@ -292,7 +288,7 @@
 
     /* ── Views ── */
     function showHome() {
-      stopVideo();                      // ← kill audio before hiding player
+      stopVideo();
       homeInner.style.display = "";
       playerView.classList.add("hidden");
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -427,12 +423,9 @@
 
     /* ── Trigger playback ── */
     function triggerPlay(ch) {
-      /* Prefer the globally-exposed playChannel from app.js — avoids the race
-         condition where the sidebar button hasn't been moved by MutationObserver yet. */
       if (typeof window.playChannel === "function") {
         window.playChannel(ch);
       } else {
-        /* Fallback: try the hidden sidebar button (original behaviour) */
         const sidebarBtn = sidebar.querySelector(`.channel-item[data-url="${CSS.escape(ch.url)}"]`);
         if (sidebarBtn) sidebarBtn.click();
       }
@@ -476,7 +469,6 @@
 
       if (!newData.length) return;
 
-      /* Move raw buttons to hidden sidebar */
       let hiddenList = sidebar.querySelector(".sidebar-channel-list-hidden");
       if (!hiddenList) {
         hiddenList = document.createElement("div");
@@ -509,52 +501,28 @@
 
     /* ══════════════════════════════════════════════════════════
        UPCOMING MATCHES — TODAY ONLY (IST)
-
-       Logic:
-       1. Get current date & time in IST (UTC+5:30).
-       2. Parse each UPCOMING match's startTime ("HH:MM:SS AM/PM DD-MM-YYYY").
-          The times in fancode.json are already in IST.
-       3. Keep only matches where:
-          a. Date part matches today's IST date (DD-MM-YYYY).
-          b. startTime is still in the future (> now in IST).
-       4. Sort ascending by startTime.
-       5. Refresh every 2 minutes — removes a card once its
-          startTime has passed (it'll be LIVE by then anyway).
-
-       app.js, api/hls.js, api/events.js — completely untouched.
     ══════════════════════════════════════════════════════════ */
 
     const RAW_JSON = "https://raw.githubusercontent.com/drmlive/fancode-live-events/refs/heads/main/fancode.json";
-    const UPD_REFRESH = 1 * 60 * 1000;   // 1 minute — re-checks as each match goes live
+    const UPD_REFRESH = 1 * 60 * 1000;
 
     const upcomingSection = document.getElementById("upcoming-section");
     const upcomingList    = document.getElementById("upcoming-list");
     const upcomingBadge   = document.getElementById("upcoming-badge");
 
-    /* ── IST helpers ──────────────────────────────────────────
-       IST = UTC + 5h 30m = UTC + 330 minutes.
-       We build a "now in IST" Date so we can compare correctly
-       regardless of what timezone the user's browser is in.
-    ── */
     function nowIST() {
-      const utcMs  = Date.now();
-      const istMs  = utcMs + 330 * 60 * 1000;   // shift to IST
-      return new Date(istMs);                     // this Date's UTC fields == IST wall-clock
+      const utcMs = Date.now();
+      const istMs = utcMs + 330 * 60 * 1000;
+      return new Date(istMs);
     }
 
-    /*
-      Parse "07:30:00 PM 27-06-2026" (which is already IST wall-clock)
-      → { dateStr: "27-06-2026", totalMinutes: 1170, label: "7:30 PM" }
-      totalMinutes used for chronological sorting across dates.
-    */
     function parseIST(startTime) {
       if (!startTime) return null;
       const parts = startTime.trim().split(/\s+/);
-      // parts: ["07:30:00", "PM", "27-06-2026"]
       if (parts.length < 3) return null;
       const [hStr, mStr] = parts[0].split(":");
       const ampm    = parts[1].toUpperCase();
-      const dateStr = parts[2];                 // "27-06-2026"
+      const dateStr = parts[2];
 
       let h = parseInt(hStr, 10);
       const m = parseInt(mStr, 10) || 0;
@@ -568,7 +536,6 @@
       return { dateStr, totalMinutes, label };
     }
 
-    /* ── Build an upcoming card ── */
     function buildUpcomingCard(m, parsed) {
       const card = document.createElement("div");
       card.className = "upcoming-card";
@@ -583,7 +550,6 @@
           </svg>
         </div>`;
 
-      /* Format date "DD-MM-YYYY" → "4 Jul" */
       function fmtDate(dateStr) {
         if (!dateStr) return "";
         const [dd, mm, yyyy] = dateStr.split("-");
@@ -592,7 +558,7 @@
         return `${parseInt(dd, 10)} ${mo}`;
       }
 
-      const cat      = (m.event_category || "Sports").toUpperCase();
+      const cat       = (m.event_category || "Sports").toUpperCase();
       const dateLabel = fmtDate(parsed?.dateStr);
       const timeLabel = parsed?.label || "";
 
@@ -619,30 +585,23 @@
       return card;
     }
 
-    /* ── Fetch, filter, render ── */
     async function loadUpcoming() {
       try {
         const res = await fetch(`${RAW_JSON}?_=${Date.now()}`, { cache: "no-store" });
         if (!res.ok) return;
         const data = await res.json();
 
-        /* Show ALL upcoming matches — no date/time filtering.
-           Sort by date first, then time within each date. */
-
-        /* Build an absolute sort key per match (IST epoch minutes from a fixed point) */
         function sortKey(m) {
           const p = parseIST(m.startTime);
           if (!p) return Infinity;
           const [dd, mm, yyyy] = p.dateStr.split("-").map(Number);
-          /* Days since year 2000 × 1440 + minutes gives a comparable integer */
           const dayNum = (yyyy - 2000) * 365 + mm * 31 + dd;
           return dayNum * 1440 + p.totalMinutes;
         }
 
-        /* Current IST minutes-since-epoch (same scale as sortKey) */
         function nowKey() {
-          const istMs  = Date.now() + 330 * 60 * 1000;
-          const n      = new Date(istMs);
+          const istMs = Date.now() + 330 * 60 * 1000;
+          const n     = new Date(istMs);
           const dd = n.getUTCDate(), mm = n.getUTCMonth() + 1, yyyy = n.getUTCFullYear();
           const dayNum = (yyyy - 2000) * 365 + mm * 31 + dd;
           return dayNum * 1440 + n.getUTCHours() * 60 + n.getUTCMinutes();
@@ -652,9 +611,9 @@
 
         const next10 = (data.matches || [])
           .filter(m => m.status === "UPCOMING" && m.startTime)
-          .filter(m => sortKey(m) > now)          /* only future matches */
-          .sort((a, b) => sortKey(a) - sortKey(b))/* nearest first */
-          .slice(0, 5);                           /* next 10 only */
+          .filter(m => sortKey(m) > now)
+          .sort((a, b) => sortKey(a) - sortKey(b))
+          .slice(0, 5);
 
         if (!next10.length) {
           upcomingSection.style.display = "none";
@@ -672,7 +631,7 @@
         upcomingSection.style.display = "";
 
       } catch (e) {
-        /* Silently fail — upcoming is a bonus feature, never breaks the page */
+        /* Silently fail */
       }
     }
 
