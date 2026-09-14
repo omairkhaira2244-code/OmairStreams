@@ -14,15 +14,15 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="OmairStreams" />
   
-  <title>OmairStreams — Next-Gen Live Sports</title>
+  <title>OmairStreams — Live Sports</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=301" />
+  <link rel="stylesheet" href="styles.css?v=305" />
 </head>
 <body>
 
-  <!-- Offline Status Toast (Feature #12) -->
+  <!-- Offline Status Toast -->
   <div id="offline-toast" class="offline-banner">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
       <line x1="1" y1="1" x2="23" y2="23"></line>
@@ -41,7 +41,7 @@
     <!-- ══ HOME VIEW ════════════════════════════════════════ -->
     <div id="home-view">
 
-      <!-- ══ HEADER WITH 7 THEMES & SEARCH ════════════════════ -->
+      <!-- Header with 7 Themes & Search -->
       <header class="header">
         <div class="brand">
           <div class="brand-icon">
@@ -54,7 +54,6 @@
         </div>
 
         <div class="header-right">
-          <!-- 7-Theme Switcher -->
           <div class="theme-picker" title="Switch Theme Palette">
             <button type="button" class="theme-dot active" data-set-theme="cyber-neon" title="Cyber Neon"></button>
             <button type="button" class="theme-dot" data-set-theme="midnight-blue" title="Midnight Blue"></button>
@@ -84,7 +83,7 @@
             STREAMING LIVE
           </div>
           <h1 class="hero-title">EVERY LIVE MATCH.<br><em class="hero-em-blue">ONE PLACE.</em></h1>
-          <p class="hero-desc">Watch Formula 1, Cricket, Football, Kabaddi &amp; more live sports free only at OmairStreams.</p>
+          <p class="hero-desc">Watch Football, Cricket, Formula 1, Kabaddi &amp; more live sports free only at OmairStreams.</p>
           <div class="hero-stats" id="hero-stats">
             <div class="hero-stat">
               <span class="stat-value" id="stat-events">—</span>
@@ -103,7 +102,7 @@
         <div class="category-scroll" id="category-scroll"></div>
       </div>
 
-      <!-- Matches Grid -->
+      <!-- Live Matches Grid -->
       <div class="matches-section" id="events-section" style="display:none">
         <div id="channel-list" class="matches-list">
           <div class="empty-state">
@@ -113,7 +112,7 @@
         </div>
       </div>
 
-      <!-- Upcoming Matches with Countdown -->
+      <!-- Upcoming Matches with Live Countdowns -->
       <div class="upcoming-section" id="upcoming-section" style="display:none">
         <div class="upcoming-header">
           <div class="upcoming-header-left">
@@ -149,7 +148,6 @@
         </div>
 
         <div class="player-actions">
-          <!-- PiP Button (Feature #1) -->
           <button type="button" class="btn-action" id="btn-pip" title="Picture in Picture">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <rect x="2" y="3" width="20" height="14" rx="2"></rect>
@@ -167,7 +165,7 @@
         </div>
       </header>
 
-      <!-- Player Wrap with Dynamic Ambilight (Feature #9) -->
+      <!-- Player Ambient Box -->
       <div class="player-ambience-box">
         <div class="player-ambilight-glow"></div>
         <div class="player-wrap">
@@ -212,7 +210,7 @@
       </div>
     </div>
 
-    <!-- Legacy hooks required by app.js (strictly hidden) -->
+    <!-- Legacy hooks required by app.js (kept hidden) -->
     <div id="drawer-backdrop" class="drawer-backdrop hidden" aria-hidden="true"></div>
     <button type="button" id="btn-channels" style="display:none" aria-hidden="true"></button>
     <aside id="sidebar" class="sidebar" aria-hidden="true" style="display:none"></aside>
@@ -231,7 +229,7 @@
   (function patchOmairStreams() {
     "use strict";
 
-    /* ── Feature #12: Offline Toast Detection ── */
+    /* Offline Toast Detection */
     const offlineToast = document.getElementById("offline-toast");
     function updateOnlineStatus() {
       if (!navigator.onLine) {
@@ -243,7 +241,7 @@
     window.addEventListener("online", updateOnlineStatus);
     window.addEventListener("offline", updateOnlineStatus);
 
-    /* ── 7-Theme Switcher ── */
+    /* 7-Theme Switcher */
     const themeDots = document.querySelectorAll(".theme-dot");
     const savedTheme = localStorage.getItem("omair_theme") || "cyber-neon";
     function setTheme(theme) {
@@ -261,7 +259,7 @@
       });
     });
 
-    /* ── Focus Search on "/" Key ── */
+    /* Focus Search on "/" Key */
     window.addEventListener("keydown", (e) => {
       if (e.key === "/" && document.activeElement.tagName !== "INPUT") {
         e.preventDefault();
@@ -269,7 +267,7 @@
       }
     });
 
-    /* ── DOM refs ── */
+    /* DOM refs */
     const homeInner      = document.getElementById("home-view");
     const playerView     = document.getElementById("player-view");
     const channelList    = document.getElementById("channel-list");
@@ -290,11 +288,47 @@
     const videoEl   = document.getElementById("video");
 
     let allChannelData = [];
-    /* Feature #4: Persistent Favorite Category */
     let activeGroup    = localStorage.getItem("omair_favorite_sport") || "All";
     let initialized    = false;
+    let localShakaPlayer = null;
 
-    /* ── Feature #1: Picture-in-Picture Toggle ── */
+    /* Initialize Dedicated Shaka Player */
+    async function initPlayer() {
+      shaka.polyfill.installAll();
+      if (shaka.Player.isBrowserSupported()) {
+        localShakaPlayer = new shaka.Player(videoEl);
+        localShakaPlayer.configure({
+          streaming: {
+            bufferingGoal: 10,
+            rebufferingGoal: 2,
+            bufferBehind: 15
+          }
+        });
+      }
+    }
+    initPlayer();
+
+    /* Direct Direct Play Function */
+    async function directPlayStream(url) {
+      if (!url) return;
+      try {
+        if (localShakaPlayer) {
+          await localShakaPlayer.load(url);
+          videoEl.play().catch(() => {});
+        } else {
+          videoEl.src = url;
+          videoEl.load();
+          videoEl.play().catch(() => {});
+        }
+      } catch (err) {
+        console.warn("Direct Shaka load error, falling back to native:", err);
+        videoEl.src = url;
+        videoEl.load();
+        videoEl.play().catch(() => {});
+      }
+    }
+
+    /* Picture-in-Picture Toggle */
     document.getElementById("btn-pip")?.addEventListener("click", async () => {
       try {
         if (document.pictureInPictureElement) {
@@ -331,14 +365,15 @@
     }
 
     function stopVideo() {
-      if (!videoEl) return;
-      try {
-        videoEl.pause();
-        videoEl.removeAttribute("src");
-        videoEl.load();
-      } catch (e) {}
-      if (typeof window.__hlsInstance !== "undefined" && window.__hlsInstance) {
-        try { window.__hlsInstance.destroy(); window.__hlsInstance = null; } catch (e) {}
+      if (localShakaPlayer) {
+        try { localShakaPlayer.unload(); } catch(e) {}
+      }
+      if (videoEl) {
+        try {
+          videoEl.pause();
+          videoEl.removeAttribute("src");
+          videoEl.load();
+        } catch (e) {}
       }
     }
 
@@ -360,15 +395,6 @@
     function triggerPlay(ch) {
       if (!ch || !ch.url) return;
 
-      const allButtons = Array.from(document.querySelectorAll(".channel-item"));
-      const targetBtn = allButtons.find(b => b.dataset.url === ch.url);
-
-      if (targetBtn) {
-        targetBtn.click();
-      } else if (typeof window.playChannel === "function") {
-        window.playChannel(ch);
-      }
-
       if (nowTeams) nowTeams.innerHTML = matchTitleHtml(ch.title);
       if (nowGroup) nowGroup.textContent = ch.group;
       if (nowLogo) {
@@ -381,6 +407,7 @@
       }
 
       showPlayer();
+      directPlayStream(ch.url);
       renderSuggestions(ch.url);
     }
 
@@ -473,7 +500,6 @@
           categoryScroll.querySelectorAll(".cat-pill").forEach(b => b.classList.remove("active"));
           btn.classList.add("active");
           activeGroup = btn.dataset.group;
-          /* Feature #4 Save preference */
           localStorage.setItem("omair_favorite_sport", activeGroup);
           applyFilter();
         });
@@ -494,7 +520,7 @@
     document.getElementById("btn-back-home")?.addEventListener("click", showHome);
     document.getElementById("channel-search")?.addEventListener("input", applyFilter);
 
-    /* Move raw scraper elements safely into hidden aside */
+    /* Watch original scraper output without destroying stream parameters */
     const observer = new MutationObserver(() => {
       const items = channelList.querySelectorAll(".channel-item");
       if (!items.length) return;
@@ -539,7 +565,7 @@
 
     observer.observe(channelList, { childList: true, subtree: false });
 
-    /* ══ Feature #2: Dynamic Upcoming Fixtures with Countdowns ══ */
+    /* Upcoming Matches Parser with IST Countdown */
     const RAW_JSON = "https://raw.githubusercontent.com/drmlive/fancode-live-events/refs/heads/main/fancode.json";
     const upcomingSection = document.getElementById("upcoming-section");
     const upcomingList    = document.getElementById("upcoming-list");
