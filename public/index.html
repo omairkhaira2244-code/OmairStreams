@@ -14,11 +14,11 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="OmairStreams" />
   
-  <title>OmairStreams — Live Sports</title>
+  <title>OmairStreams — Dual Screen Live Sports</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=305" />
+  <link rel="stylesheet" href="styles.css?v=401" />
 </head>
 <body>
 
@@ -41,7 +41,7 @@
     <!-- ══ HOME VIEW ════════════════════════════════════════ -->
     <div id="home-view">
 
-      <!-- Header with 7 Themes & Search -->
+      <!-- Header with Themes & Search -->
       <header class="header">
         <div class="brand">
           <div class="brand-icon">
@@ -49,7 +49,7 @@
           </div>
           <div class="brand-text">
             <span class="brand-name">OmairStreams</span>
-            <span class="brand-sub">Live Sports Experience</span>
+            <span class="brand-sub">Dual Screen Sports Hub</span>
           </div>
         </div>
 
@@ -83,7 +83,7 @@
             STREAMING LIVE
           </div>
           <h1 class="hero-title">EVERY LIVE MATCH.<br><em class="hero-em-blue">ONE PLACE.</em></h1>
-          <p class="hero-desc">Watch Football, Cricket, Formula 1, Kabaddi &amp; more live sports free only at OmairStreams.</p>
+          <p class="hero-desc">Watch 2 matches simultaneously with Dual Screen mode, or full screen. Completely free at OmairStreams.</p>
           <div class="hero-stats" id="hero-stats">
             <div class="hero-stat">
               <span class="stat-value" id="stat-events">—</span>
@@ -143,11 +143,21 @@
           </div>
           <div class="brand-text">
             <span class="brand-name">OmairStreams</span>
-            <span class="brand-sub">Live Sports Experience</span>
+            <span class="brand-sub">Multi-View Hub</span>
           </div>
         </div>
 
         <div class="player-actions">
+          <!-- Split Screen Toggle Button -->
+          <button type="button" class="btn-action" id="btn-split-toggle" title="Split Screen Dual View">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="8" height="18" rx="2"></rect>
+              <rect x="13" y="3" width="8" height="18" rx="2"></rect>
+            </svg>
+            <span id="split-btn-text">Split Screen</span>
+          </button>
+
+          <!-- PiP Button -->
           <button type="button" class="btn-action" id="btn-pip" title="Picture in Picture">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <rect x="2" y="3" width="20" height="14" rx="2"></rect>
@@ -165,28 +175,41 @@
         </div>
       </header>
 
-      <!-- Player Ambient Box -->
+      <!-- Player Ambient Grid Box -->
       <div class="player-ambience-box">
         <div class="player-ambilight-glow"></div>
-        <div class="player-wrap">
-          <video id="video" controls playsinline webkit-playsinline x5-playsinline muted autoplay preload="auto"></video>
-          <div id="player-overlay" class="player-overlay hidden">
-            <div class="overlay-content">
-              <p>Select a channel to start streaming</p>
+
+        <div class="player-grid" id="player-grid">
+          <!-- Screen 1 (Primary) -->
+          <div class="player-slot" id="slot-1">
+            <div class="player-slot-header">
+              <span class="slot-badge" id="badge-screen-1">Screen 1</span>
+            </div>
+            <video id="video" controls playsinline webkit-playsinline x5-playsinline muted autoplay preload="auto"></video>
+            <div id="player-loading" class="player-loading hidden">
+              <div class="spinner"></div>
+              <span>Connecting…</span>
+            </div>
+            <div id="player-error" class="player-error hidden">
+              <p id="error-message">Unable to play</p>
+              <button type="button" id="btn-retry" class="btn btn-ghost">Retry</button>
             </div>
           </div>
-          <div id="player-loading" class="player-loading hidden">
-            <div class="spinner"></div>
-            <span>Connecting to live feed…</span>
-          </div>
-          <div id="player-error" class="player-error hidden">
-            <p id="error-message">Unable to play stream</p>
-            <button type="button" id="btn-retry" class="btn btn-ghost">Retry</button>
+
+          <!-- Screen 2 (Split View Secondary) -->
+          <div class="player-slot hidden" id="slot-2" style="display:none">
+            <div class="player-slot-header">
+              <span class="slot-badge" id="badge-screen-2">Screen 2</span>
+              <button type="button" class="btn-close-slot" id="btn-close-screen-2">✕ Close</button>
+            </div>
+            <video id="video-2" controls playsinline webkit-playsinline x5-playsinline muted autoplay preload="auto"></video>
           </div>
         </div>
       </div>
 
-      <div id="quality-selector" class="quality-selector hidden"></div>
+      <div id="split-hint" class="split-pick-hint">
+        ⚡ Click any game below to load it directly into <strong>Screen 2</strong>!
+      </div>
 
       <!-- Now Playing Bar -->
       <div class="now-card" id="now-card">
@@ -201,6 +224,7 @@
         <img id="now-logo" class="now-logo hidden" alt="" />
       </div>
 
+      <!-- More Matches Grid (Used to select screen 2 or jump games) -->
       <div class="more-section" id="suggestions-section" style="display:none">
         <div class="more-header">
           <span class="more-title">MORE MATCHES STREAMING NOW</span>
@@ -210,7 +234,7 @@
       </div>
     </div>
 
-    <!-- Legacy hooks required by app.js (kept hidden) -->
+    <!-- Legacy hooks required by app.js (strictly hidden) -->
     <div id="drawer-backdrop" class="drawer-backdrop hidden" aria-hidden="true"></div>
     <button type="button" id="btn-channels" style="display:none" aria-hidden="true"></button>
     <aside id="sidebar" class="sidebar" aria-hidden="true" style="display:none"></aside>
@@ -218,7 +242,7 @@
     <footer class="footer">
       <span>OmairStreams</span>
       <span class="dot">·</span>
-      <span>Next-Gen Live Sports Free</span>
+      <span>Dual Screen Live Sports</span>
     </footer>
   </div>
 
@@ -268,64 +292,146 @@
     });
 
     /* DOM refs */
-    const homeInner      = document.getElementById("home-view");
-    const playerView     = document.getElementById("player-view");
-    const channelList    = document.getElementById("channel-list");
-    const sidebar        = document.getElementById("sidebar");
-    const categoryBar    = document.getElementById("category-bar");
-    const categoryScroll = document.getElementById("category-scroll");
-    const eventsSection  = document.getElementById("events-section");
+    const homeInner         = document.getElementById("home-view");
+    const playerView        = document.getElementById("player-view");
+    const channelList       = document.getElementById("channel-list");
+    const sidebar           = document.getElementById("sidebar");
+    const categoryBar       = document.getElementById("category-bar");
+    const categoryScroll    = document.getElementById("category-scroll");
+    const eventsSection     = document.getElementById("events-section");
     const suggestionsSection = document.getElementById("suggestions-section");
-    const suggestionsScroll  = document.getElementById("suggestions-scroll");
-    const statEvents     = document.getElementById("stat-events");
-    const statCats       = document.getElementById("stat-cats");
-    const channelCountEl = document.getElementById("channel-count");
-    const moreCount      = document.getElementById("more-count");
+    const suggestionsScroll = document.getElementById("suggestions-scroll");
+    const statEvents        = document.getElementById("stat-events");
+    const statCats          = document.getElementById("stat-cats");
+    const channelCountEl    = document.getElementById("channel-count");
+    const moreCount         = document.getElementById("more-count");
 
     const nowTeams  = document.getElementById("now-teams");
     const nowGroup  = document.getElementById("now-group");
     const nowLogo   = document.getElementById("now-logo");
-    const videoEl   = document.getElementById("video");
+
+    const videoEl    = document.getElementById("video");
+    const video2El   = document.getElementById("video-2");
+    const slot2      = document.getElementById("slot-2");
+    const playerGrid = document.getElementById("player-grid");
+    const splitBtn   = document.getElementById("btn-split-toggle");
+    const splitHint  = document.getElementById("split-hint");
+    const badge1     = document.getElementById("badge-screen-1");
+    const badge2     = document.getElementById("badge-screen-2");
 
     let allChannelData = [];
     let activeGroup    = localStorage.getItem("omair_favorite_sport") || "All";
     let initialized    = false;
-    let localShakaPlayer = null;
+    let localShaka1    = null;
+    let localShaka2    = null;
+    let isSplitActive  = false;
+    let currentCh1     = null;
+    let currentCh2     = null;
 
-    /* Initialize Dedicated Shaka Player */
-    async function initPlayer() {
+    /* Initialize Shaka Instances for Both Video Slots */
+    async function initPlayers() {
       shaka.polyfill.installAll();
       if (shaka.Player.isBrowserSupported()) {
-        localShakaPlayer = new shaka.Player(videoEl);
-        localShakaPlayer.configure({
+        localShaka1 = new shaka.Player(videoEl);
+        localShaka2 = new shaka.Player(video2El);
+
+        const config = {
           streaming: {
             bufferingGoal: 10,
             rebufferingGoal: 2,
             bufferBehind: 15
           }
-        });
+        };
+        localShaka1.configure(config);
+        localShaka2.configure(config);
       }
     }
-    initPlayer();
+    initPlayers();
 
-    /* Direct Direct Play Function */
-    async function directPlayStream(url) {
+    async function loadStreamInto(playerInstance, videoTag, url) {
       if (!url) return;
       try {
-        if (localShakaPlayer) {
-          await localShakaPlayer.load(url);
-          videoEl.play().catch(() => {});
+        if (playerInstance) {
+          await playerInstance.load(url);
+          videoTag.play().catch(() => {});
         } else {
-          videoEl.src = url;
-          videoEl.load();
-          videoEl.play().catch(() => {});
+          videoTag.src = url;
+          videoTag.load();
+          videoTag.play().catch(() => {});
         }
       } catch (err) {
-        console.warn("Direct Shaka load error, falling back to native:", err);
-        videoEl.src = url;
-        videoEl.load();
-        videoEl.play().catch(() => {});
+        console.warn("Falling back to native playback:", err);
+        videoTag.src = url;
+        videoTag.load();
+        videoTag.play().catch(() => {});
       }
+    }
+
+    /* Multi-View / Split Screen Toggle */
+    function enableSplitMode() {
+      isSplitActive = true;
+      playerGrid.classList.add("dual-view");
+      slot2.style.display = "block";
+      splitBtn.classList.add("active");
+      splitHint.classList.add("visible");
+      document.getElementById("split-btn-text").textContent = "Dual Active";
+
+      // If Screen 2 is not yet playing, auto-pick next match
+      if (!currentCh2 && allChannelData.length > 1) {
+        const alt = allChannelData.find(c => c.url !== currentCh1?.url);
+        if (alt) playInScreen2(alt);
+      }
+    }
+
+    function disableSplitMode() {
+      isSplitActive = false;
+      playerGrid.classList.remove("dual-view");
+      slot2.style.display = "none";
+      splitBtn.classList.remove("active");
+      splitHint.classList.remove("visible");
+      document.getElementById("split-btn-text").textContent = "Split Screen";
+
+      if (localShaka2) {
+        try { localShaka2.unload(); } catch(e) {}
+      }
+      if (video2El) {
+        video2El.pause();
+        video2El.removeAttribute("src");
+        video2El.load();
+      }
+      currentCh2 = null;
+    }
+
+    splitBtn?.addEventListener("click", () => {
+      if (isSplitActive) {
+        disableSplitMode();
+      } else {
+        enableSplitMode();
+      }
+    });
+
+    document.getElementById("btn-close-screen-2")?.addEventListener("click", disableSplitMode);
+
+    function playInScreen1(ch) {
+      currentCh1 = ch;
+      badge1.textContent = ch.title.split(" vs ")[0] || "Screen 1";
+      if (nowTeams) nowTeams.innerHTML = matchTitleHtml(ch.title);
+      if (nowGroup) nowGroup.textContent = ch.group;
+      if (nowLogo) {
+        if (ch.logo) {
+          nowLogo.src = ch.logo;
+          nowLogo.classList.remove("hidden");
+        } else {
+          nowLogo.classList.add("hidden");
+        }
+      }
+      loadStreamInto(localShaka1, videoEl, ch.url);
+    }
+
+    function playInScreen2(ch) {
+      currentCh2 = ch;
+      badge2.textContent = ch.title.split(" vs ")[0] || "Screen 2";
+      loadStreamInto(localShaka2, video2El, ch.url);
     }
 
     /* Picture-in-Picture Toggle */
@@ -364,9 +470,10 @@
       return `<span class="team-name">${esc(title)}</span>`;
     }
 
-    function stopVideo() {
-      if (localShakaPlayer) {
-        try { localShakaPlayer.unload(); } catch(e) {}
+    function stopAllVideo() {
+      disableSplitMode();
+      if (localShaka1) {
+        try { localShaka1.unload(); } catch(e) {}
       }
       if (videoEl) {
         try {
@@ -378,7 +485,7 @@
     }
 
     function showHome() {
-      stopVideo();
+      stopAllVideo();
       homeInner.style.display = "";
       playerView.classList.add("hidden");
       playerView.style.display = "none";
@@ -392,23 +499,15 @@
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    function triggerPlay(ch) {
-      if (!ch || !ch.url) return;
-
-      if (nowTeams) nowTeams.innerHTML = matchTitleHtml(ch.title);
-      if (nowGroup) nowGroup.textContent = ch.group;
-      if (nowLogo) {
-        if (ch.logo) {
-          nowLogo.src = ch.logo;
-          nowLogo.classList.remove("hidden");
-        } else {
-          nowLogo.classList.add("hidden");
-        }
+    function handleCardClick(ch) {
+      // If user is already in split mode, clicking a card loads it into Screen 2
+      if (isSplitActive) {
+        playInScreen2(ch);
+      } else {
+        showPlayer();
+        playInScreen1(ch);
+        renderSuggestions(ch.url);
       }
-
-      showPlayer();
-      directPlayStream(ch.url);
-      renderSuggestions(ch.url);
     }
 
     function buildMatchCard(ch) {
@@ -435,7 +534,7 @@
         </div>
       `;
 
-      card.addEventListener("click", () => triggerPlay(ch));
+      card.addEventListener("click", () => handleCardClick(ch));
       return card;
     }
 
@@ -459,7 +558,14 @@
         </div>
       `;
 
-      card.addEventListener("click", () => triggerPlay(ch));
+      card.addEventListener("click", () => {
+        if (isSplitActive) {
+          playInScreen2(ch);
+        } else {
+          playInScreen1(ch);
+          renderSuggestions(ch.url);
+        }
+      });
       return card;
     }
 
@@ -520,7 +626,7 @@
     document.getElementById("btn-back-home")?.addEventListener("click", showHome);
     document.getElementById("channel-search")?.addEventListener("input", applyFilter);
 
-    /* Watch original scraper output without destroying stream parameters */
+    /* Scraper Observer */
     const observer = new MutationObserver(() => {
       const items = channelList.querySelectorAll(".channel-item");
       if (!items.length) return;
@@ -565,7 +671,7 @@
 
     observer.observe(channelList, { childList: true, subtree: false });
 
-    /* Upcoming Matches Parser with IST Countdown */
+    /* Upcoming Matches with IST Countdown */
     const RAW_JSON = "https://raw.githubusercontent.com/drmlive/fancode-live-events/refs/heads/main/fancode.json";
     const upcomingSection = document.getElementById("upcoming-section");
     const upcomingList    = document.getElementById("upcoming-list");
