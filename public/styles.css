@@ -809,3 +809,64 @@ video {
     grid-template-columns: 1fr;
   }
 }
+/* ══ THEATER DUAL VIEW & TARGET SELECTOR ══ */
+.player-grid.dual-view {
+  grid-template-columns: 1fr 1fr;
+  max-width: 1600px !important;
+  width: 100%;
+}
+
+.player-view.wide-mode .player-header,
+.player-view.wide-mode .player-ambience-box,
+.player-view.wide-mode .now-card,
+.player-view.wide-mode .more-section,
+.player-view.wide-mode .split-pick-hint {
+  max-width: 96vw !important;
+}
+
+.player-slot.active-target {
+  border: 2px solid var(--accent) !important;
+  box-shadow: 0 0 20px var(--accent-glow) !important;
+}
+
+.screen-target-bar {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 0 auto 16px;
+  max-width: 1020px;
+}
+
+.screen-target-bar.visible {
+  display: flex;
+}
+
+.target-pill {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.target-pill.active {
+  background: var(--accent-grad);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+.target-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
