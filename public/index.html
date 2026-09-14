@@ -1,26 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="cyber-neon">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1" />
-  <meta name="theme-color" content="#070b14" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#080d1a" />
   <meta name="referrer" content="no-referrer" />
+  
+  <link rel="manifest" href="manifest.json" />
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="apple-touch-icon" href="logo.png" />
+  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="description" content="OmairStreams — Watch Formula 1, Cricket, Football and more live sports free in one place." />
+  <meta name="apple-mobile-web-app-title" content="OmairStreams" />
+  
   <title>OmairStreams — Live Sports Streaming Free</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=99" />
+  <link rel="stylesheet" href="styles.css?v=201" />
 </head>
 <body>
   <div class="app" id="view-home">
 
+    <!-- ══ HOME VIEW ════════════════════════════════════════ -->
     <div id="home-view">
 
+      <!-- ══ HEADER WITH 5 THEMES & SEARCH ════════════════════ -->
       <header class="header">
         <div class="brand">
           <div class="brand-icon">
@@ -31,7 +37,17 @@
             <span class="brand-sub">Live Sports Streaming</span>
           </div>
         </div>
-        <div class="header-search">
+
+        <div class="header-right">
+          <!-- Aesthetic 5-Theme Switcher -->
+          <div class="theme-picker" title="Switch Theme">
+            <button type="button" class="theme-dot active" data-set-theme="cyber-neon" title="Cyber Neon"></button>
+            <button type="button" class="theme-dot" data-set-theme="midnight-blue" title="Midnight Blue"></button>
+            <button type="button" class="theme-dot" data-set-theme="emerald-pitch" title="Emerald Pitch"></button>
+            <button type="button" class="theme-dot" data-set-theme="sunset-crimson" title="Sunset Crimson"></button>
+            <button type="button" class="theme-dot" data-set-theme="royal-amethyst" title="Royal Amethyst"></button>
+          </div>
+
           <div class="search-wrap">
             <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
@@ -39,9 +55,11 @@
             <input type="search" id="channel-search" placeholder="Search matches…" enterkeyhint="search" />
           </div>
         </div>
+
         <div id="channel-count" class="header-count" style="display:none">Loading…</div>
       </header>
 
+      <!-- Hero Card -->
       <div class="hero-card">
         <div class="hero-card-inner">
           <div class="hero-live-pill">
@@ -49,7 +67,7 @@
             STREAMING NOW
           </div>
           <h1 class="hero-title">EVERY LIVE MATCH.<br><em class="hero-em-blue">ONE PLACE.</em></h1>
-          <p class="hero-desc">Watch Formula 1, Cricket, Football, Kabaddi &amp; more — all free only at OmairStreams.</p>
+          <p class="hero-desc">Watch Formula 1, Cricket, Football &amp; more live sports free only at OmairStreams.</p>
           <div class="hero-stats" id="hero-stats">
             <div class="hero-stat">
               <span class="stat-value" id="stat-events">—</span>
@@ -63,11 +81,12 @@
         </div>
       </div>
 
+      <!-- Categories -->
       <div class="category-bar" id="category-bar" style="display:none">
-        <div class="category-scroll" id="category-scroll">
-          </div>
+        <div class="category-scroll" id="category-scroll"></div>
       </div>
 
+      <!-- Matches Grid -->
       <div class="matches-section" id="events-section" style="display:none">
         <div id="channel-list" class="matches-list">
           <div class="empty-state">
@@ -77,6 +96,7 @@
         </div>
       </div>
 
+      <!-- Upcoming Today -->
       <div class="upcoming-section" id="upcoming-section" style="display:none">
         <div class="upcoming-header">
           <div class="upcoming-header-left">
@@ -96,8 +116,10 @@
         <div class="upcoming-list" id="upcoming-list"></div>
       </div>
 
-    </div><div id="player-view" class="player-view hidden">
+    </div><!-- /home-view -->
 
+    <!-- ══ PLAYER VIEW ══════════════════════════════════════ -->
+    <div id="player-view" class="player-view hidden">
       <header class="player-header">
         <div class="brand">
           <div class="brand-icon">
@@ -120,10 +142,6 @@
         <video id="video" controls playsinline webkit-playsinline x5-playsinline muted autoplay preload="auto"></video>
         <div id="player-overlay" class="player-overlay hidden">
           <div class="overlay-content">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <circle cx="12" cy="12" r="10"/>
-              <polygon points="10 8 16 12 10 16 10 8"/>
-            </svg>
             <p>Select a channel to start streaming</p>
           </div>
         </div>
@@ -132,11 +150,6 @@
           <span>Connecting to stream…</span>
         </div>
         <div id="player-error" class="player-error hidden">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"/>
-            <line x1="12" y1="8" x2="12" y2="12"/>
-            <line x1="12" y1="16" x2="12.01" y2="16"/>
-          </svg>
           <p id="error-message">Unable to play stream</p>
           <button type="button" id="btn-retry" class="btn btn-ghost">Retry</button>
         </div>
@@ -145,18 +158,13 @@
       <div id="quality-selector" class="quality-selector hidden"></div>
 
       <div class="now-card" id="now-card">
-        <div class="now-live-pill">
-          <span class="now-live-dot"></span>
-          LIVE NOW
-        </div>
-        <div class="now-match">
-          <div class="now-teams" id="now-teams">
-            <span id="now-title">No channel selected</span>
+        <div>
+          <div class="now-live-pill">
+            <span class="now-live-dot"></span>
+            LIVE NOW
           </div>
-          <div class="now-meta">
-            <span id="now-group" class="now-group"></span>
-          </div>
-          <div id="now-url" class="now-url desktop-only"></div>
+          <div class="now-teams" id="now-teams">No channel selected</div>
+          <div class="now-meta" id="now-group"></div>
         </div>
         <img id="now-logo" class="now-logo hidden" alt="" />
       </div>
@@ -168,35 +176,46 @@
         </div>
         <div class="more-scroll" id="suggestions-scroll"></div>
       </div>
+    </div>
 
-    </div><div id="drawer-backdrop" class="drawer-backdrop hidden" aria-hidden="true"></div>
+    <!-- Legacy hooks required by app.js (strictly hidden) -->
+    <div id="drawer-backdrop" class="drawer-backdrop hidden" aria-hidden="true"></div>
     <button type="button" id="btn-channels" style="display:none" aria-hidden="true"></button>
-    <aside id="sidebar" class="sidebar" aria-hidden="true">
-      <div class="sidebar-header">
-        <div class="sidebar-title-row">
-          <h2 class="sidebar-title mobile-only">Channels</h2>
-          <button type="button" id="btn-close-drawer" class="btn btn-icon mobile-only" aria-label="Close channels">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="18" y1="6" x2="6" y2="18"/>
-              <line x1="6" y1="6" x2="18" y2="18"/>
-            </svg>
-          </button>
-        </div>
-      </div>
-    </aside>
+    <aside id="sidebar" class="sidebar" aria-hidden="true" style="display:none"></aside>
 
     <footer class="footer">
       <span>OmairStreams</span>
       <span class="dot">·</span>
       <span>Live Sports Free</span>
     </footer>
-  </div><script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.6.0/shaka-player.compiled.min.js"></script>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.6.0/shaka-player.compiled.min.js"></script>
   <script src="app.js?v=17"></script>
 
   <script>
   (function patchOmairStreams() {
     "use strict";
 
+    /* ── Theme Engine ── */
+    const themeDots = document.querySelectorAll(".theme-dot");
+    const savedTheme = localStorage.getItem("omair_theme") || "cyber-neon";
+    function setTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem("omair_theme", theme);
+      themeDots.forEach(d => {
+        d.classList.toggle("active", d.dataset.setTheme === theme);
+      });
+    }
+    setTheme(savedTheme);
+    themeDots.forEach(dot => {
+      dot.addEventListener("click", (e) => {
+        e.stopPropagation();
+        setTheme(dot.dataset.setTheme);
+      });
+    });
+
+    /* ── DOM refs ── */
     const homeInner      = document.getElementById("home-view");
     const playerView     = document.getElementById("player-view");
     const channelList    = document.getElementById("channel-list");
@@ -213,7 +232,6 @@
 
     const nowTeams  = document.getElementById("now-teams");
     const nowGroup  = document.getElementById("now-group");
-    const nowUrl    = document.getElementById("now-url");
     const nowLogo   = document.getElementById("now-logo");
 
     let allChannelData = [];
@@ -260,13 +278,42 @@
       stopVideo();
       homeInner.style.display = "";
       playerView.classList.add("hidden");
+      playerView.style.display = "none";
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     function showPlayer() {
       homeInner.style.display = "none";
       playerView.classList.remove("hidden");
+      playerView.style.display = "block";
       window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function triggerPlay(ch) {
+      if (!ch || !ch.url) return;
+
+      const allButtons = Array.from(document.querySelectorAll(".channel-item"));
+      const targetBtn = allButtons.find(b => b.dataset.url === ch.url);
+
+      if (targetBtn) {
+        targetBtn.click();
+      } else if (typeof window.playChannel === "function") {
+        window.playChannel(ch);
+      }
+
+      if (nowTeams) nowTeams.innerHTML = matchTitleHtml(ch.title);
+      if (nowGroup) nowGroup.textContent = ch.group;
+      if (nowLogo) {
+        if (ch.logo) {
+          nowLogo.src = ch.logo;
+          nowLogo.classList.remove("hidden");
+        } else {
+          nowLogo.classList.add("hidden");
+        }
+      }
+
+      showPlayer();
+      renderSuggestions(ch.url);
     }
 
     function buildMatchCard(ch) {
@@ -348,7 +395,7 @@
       if (!categoryScroll) return;
       const groups = ["All", ...new Set(allChannelData.map(c => c.group).filter(Boolean).sort())];
       categoryScroll.innerHTML = groups.map(g =>
-        `<button class="cat-pill${g === "All" ? " active" : ""}" data-group="${esc(g)}">${esc(g)}</button>`
+        `<button type="button" class="cat-pill${g === "All" ? " active" : ""}" data-group="${esc(g)}">${esc(g)}</button>`
       ).join("");
       categoryScroll.querySelectorAll(".cat-pill").forEach(btn => {
         btn.addEventListener("click", () => {
@@ -371,26 +418,10 @@
       renderMatchCards(filtered);
     }
 
-    function triggerPlay(ch) {
-      if (typeof window.playChannel === "function") {
-        window.playChannel(ch);
-      } else {
-        const btns = Array.from(sidebar.querySelectorAll(".channel-item"));
-        const found = btns.find(b => b.dataset.url === ch.url);
-        if (found) found.click();
-      }
-
-      if (nowTeams) nowTeams.innerHTML = matchTitleHtml(ch.title);
-      if (nowGroup) nowGroup.textContent = ch.group;
-      if (nowUrl)   nowUrl.textContent   = ch.url;
-
-      showPlayer();
-      renderSuggestions(ch.url);
-    }
-
     document.getElementById("btn-back-home")?.addEventListener("click", showHome);
     document.getElementById("channel-search")?.addEventListener("input", applyFilter);
 
+    /* Move raw sidebar items into hidden div so they don't break the layout */
     const observer = new MutationObserver(() => {
       const items = channelList.querySelectorAll(".channel-item");
       if (!items.length) return;
@@ -398,7 +429,7 @@
       const newData = Array.from(items).map(btn => ({
         url:      btn.dataset.url || "",
         title:    btn.querySelector(".channel-name")?.textContent?.trim() || "Untitled",
-        group:    btn.querySelector(".channel-group")?.textContent?.trim() || "General",
+        group:    btn.querySelector(".channel-group")?.textContent?.trim() || "Cricket",
         logo:     btn.querySelector("img.channel-logo")?.src || "",
         language: btn.querySelector(".channel-lang")?.textContent?.trim() || "",
       })).filter(c => c.url);
@@ -409,7 +440,7 @@
       if (!hiddenList) {
         hiddenList = document.createElement("div");
         hiddenList.className = "sidebar-channel-list-hidden";
-        hiddenList.setAttribute("aria-hidden", "true");
+        hiddenList.style.display = "none";
         sidebar.appendChild(hiddenList);
       }
       items.forEach(btn => hiddenList.appendChild(btn));
@@ -435,7 +466,7 @@
 
     observer.observe(channelList, { childList: true, subtree: false });
 
-    /* Upcoming parser */
+    /* Upcoming Matches Parser */
     const RAW_JSON = "https://raw.githubusercontent.com/drmlive/fancode-live-events/refs/heads/main/fancode.json";
     const upcomingSection = document.getElementById("upcoming-section");
     const upcomingList    = document.getElementById("upcoming-list");
