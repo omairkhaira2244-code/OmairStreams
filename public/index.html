@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=500" />
+  <link rel="stylesheet" href="styles.css?v=600" />
 </head>
 <body>
 
@@ -30,7 +30,7 @@
       <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"></path>
       <path d="M10.71 5.05A16 16 0 0 1 22.58 9"></path>
       <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"></path>
-      <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+      <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></line>
       <line x1="12" y1="20" x2="12.01" y2="20"></line>
     </svg>
     <span>Connection lost. Stream will auto-resume.</span>
@@ -54,8 +54,21 @@
         </div>
 
         <div class="header-right">
-          <!-- 7-Theme Switcher -->
-          <div class="theme-picker" title="Switch Theme Palette">
+          <!-- Personal Stats Button (Feature 3) -->
+          <button type="button" class="btn-stats-header" id="btn-open-stats" title="Personal Viewing Stats">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M18 20V10M12 20V4M6 20v-6"/>
+            </svg>
+            My Stats
+          </button>
+
+          <!-- 25 Themes Modal Trigger (Feature 4) -->
+          <button type="button" class="btn-theme-modal-trigger" id="btn-open-theme-modal" title="Appearance Settings">
+            🎨 Themes
+          </button>
+
+          <!-- Quick Swatch Dot Switcher -->
+          <div class="theme-picker" title="Quick Palette Switch">
             <button type="button" class="theme-dot active" data-set-theme="cyber-neon" title="Cyber Neon"></button>
             <button type="button" class="theme-dot" data-set-theme="midnight-blue" title="Midnight Blue"></button>
             <button type="button" class="theme-dot" data-set-theme="emerald-pitch" title="Emerald Pitch"></button>
@@ -234,6 +247,47 @@
         ⚡ Click any game below to load it directly into <strong>Screen 2</strong>!
       </div>
 
+      <!-- Feature 1 & Feature 2: Dedicated Quality & Independent Audio Hub -->
+      <div class="player-hud-controls" id="player-hud-controls">
+        <!-- Screen 1 Hub -->
+        <div class="hud-panel" id="hud-panel-1">
+          <div>
+            <div class="hud-label">
+              <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--accent);"></span>
+              Screen 1 Audio &amp; Quality
+            </div>
+            <div class="audio-controls-group" style="margin-top:8px;">
+              <button type="button" class="btn-mute" id="btn-mute-1">🔊 Muted</button>
+              <input type="range" min="0" max="1" step="0.05" value="0.8" class="volume-slider" id="vol-slider-1" title="Volume Screen 1" />
+            </div>
+          </div>
+          <div>
+            <select class="quality-dropdown-select" id="quality-select-1" title="Screen 1 Quality">
+              <option value="auto">Auto Quality</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Screen 2 Hub (Visible in split mode) -->
+        <div class="hud-panel" id="hud-panel-2" style="display:none;">
+          <div>
+            <div class="hud-label">
+              <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#f43f5e;"></span>
+              Screen 2 Audio &amp; Quality
+            </div>
+            <div class="audio-controls-group" style="margin-top:8px;">
+              <button type="button" class="btn-mute" id="btn-mute-2">🔊 Muted</button>
+              <input type="range" min="0" max="1" step="0.05" value="0.8" class="volume-slider" id="vol-slider-2" title="Volume Screen 2" />
+            </div>
+          </div>
+          <div>
+            <select class="quality-dropdown-select" id="quality-select-2" title="Screen 2 Quality">
+              <option value="auto">Auto Quality</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
       <!-- Now Playing Info -->
       <div class="now-card" id="now-card">
         <div>
@@ -257,6 +311,87 @@
       </div>
     </div>
 
+    <!-- ══ FEATURE 3: MY STATS MODAL ════════════════════════ -->
+    <div class="stats-modal-overlay" id="stats-modal-overlay">
+      <div class="stats-modal-card">
+        <div class="stats-header-bar">
+          <div>
+            <h2>My Viewing Stats</h2>
+            <p style="font-size:0.75rem; color:var(--text-muted);">Personal stream analytics recorded in local browser</p>
+          </div>
+          <button type="button" class="btn-close-modal" id="btn-close-stats">Done</button>
+        </div>
+
+        <div class="stats-grid-cards">
+          <div class="stats-mini-card">
+            <div class="stats-mini-val" id="stats-total-streams">0</div>
+            <div class="stats-mini-lbl">Streams Watched</div>
+          </div>
+          <div class="stats-mini-card">
+            <div class="stats-mini-val" id="stats-total-time">0m</div>
+            <div class="stats-mini-lbl">Total Watch Time</div>
+          </div>
+          <div class="stats-mini-card">
+            <div class="stats-mini-val" id="stats-count-football">0</div>
+            <div class="stats-mini-lbl">Football</div>
+          </div>
+          <div class="stats-mini-card">
+            <div class="stats-mini-val" id="stats-count-cricket">0</div>
+            <div class="stats-mini-lbl">Cricket</div>
+          </div>
+          <div class="stats-mini-card">
+            <div class="stats-mini-val" id="stats-count-sessions">0</div>
+            <div class="stats-mini-lbl">Sessions</div>
+          </div>
+        </div>
+
+        <div class="stats-breakdown-row">
+          <div class="stats-list-box">
+            <div class="stats-list-title">Top Watched Teams</div>
+            <div id="stats-top-teams-list">
+              <div class="stats-item"><span>No teams logged yet</span></div>
+            </div>
+          </div>
+          <div class="stats-list-box">
+            <div class="stats-list-title">Top Competitions</div>
+            <div id="stats-top-comps-list">
+              <div class="stats-item"><span>No leagues logged yet</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-actions">
+          <button type="button" class="btn-reset-stats" id="btn-reset-stats">Reset My Statistics</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ FEATURE 4: 25 THEMES APPEARANCE MODAL ════════════ -->
+    <div class="theme-modal-overlay" id="theme-modal-overlay">
+      <div class="theme-modal-card">
+        <div class="stats-header-bar">
+          <div>
+            <h2>Appearance &amp; Themes</h2>
+            <p style="font-size:0.75rem; color:var(--text-muted);">25 curated themes with customized styling and accents</p>
+          </div>
+          <button type="button" class="btn-close-modal" id="btn-close-theme-modal">Apply &amp; Close</button>
+        </div>
+
+        <div class="custom-accent-box">
+          <input type="color" id="custom-accent-picker" value="#06b6d4" title="Custom Accent Color" />
+          <div>
+            <div style="font-size:0.85rem; font-weight:800;">Custom Accent Color</div>
+            <div style="font-size:0.72rem; color:var(--text-muted);">Fine-tune glowing borders and highlights instantly</div>
+          </div>
+          <button type="button" class="btn-action" id="btn-reset-theme" style="margin-left:auto; padding:6px 12px; font-size:0.75rem;">Reset Default</button>
+        </div>
+
+        <div class="theme-preview-grid" id="theme-preview-grid">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </div>
+    </div>
+
     <!-- Legacy hooks required by app.js (hidden) -->
     <div id="drawer-backdrop" class="drawer-backdrop hidden" aria-hidden="true"></div>
     <button type="button" id="btn-channels" style="display:none" aria-hidden="true"></button>
@@ -276,7 +411,255 @@
   (function patchOmairStreams() {
     "use strict";
 
-    /* Offline Toast Detection */
+    /* ═══════════════════════════════════════════════════════════
+       FEATURE 4: THEME SYSTEM ENGINE (25 THEMES + CUSTOM ACCENT)
+       ═══════════════════════════════════════════════════════════ */
+    const ALL_THEMES = [
+      { id: "cyber-neon", name: "Cyber Neon", color1: "#06b6d4", color2: "#3b82f6" },
+      { id: "midnight-blue", name: "Midnight Blue", color1: "#38bdf8", color2: "#1d4ed8" },
+      { id: "emerald-pitch", name: "Emerald Pitch", color1: "#34d399", color2: "#059669" },
+      { id: "sunset-crimson", name: "Sunset Crimson", color1: "#fb7185", color2: "#e11d48" },
+      { id: "royal-amethyst", name: "Royal Amethyst", color1: "#c084fc", color2: "#7e22ce" },
+      { id: "solar-flare", name: "Solar Flare", color1: "#fbbf24", color2: "#d97706" },
+      { id: "tokyo-drift", name: "Tokyo Drift", color1: "#ec4899", color2: "#8b5cf6" },
+      { id: "oled-black", name: "OLED Black", color1: "#ffffff", color2: "#222222" },
+      { id: "deep-navy", name: "Deep Navy", color1: "#0284c7", color2: "#0369a1" },
+      { id: "electric-blue", name: "Electric Blue", color1: "#60a5fa", color2: "#1d4ed8" },
+      { id: "purple-galaxy", name: "Purple Galaxy", color1: "#c084fc", color2: "#7e22ce" },
+      { id: "crimson", name: "Crimson", color1: "#f43f5e", color2: "#9f1239" },
+      { id: "emerald", name: "Emerald", color1: "#10b981", color2: "#047857" },
+      { id: "arctic-ice", name: "Arctic Ice", color1: "#a5f3fc", color2: "#0891b2" },
+      { id: "sunset", name: "Sunset", color1: "#fb923c", color2: "#c2410c" },
+      { id: "aurora", name: "Aurora", color1: "#2dd4bf", color2: "#6366f1" },
+      { id: "dark-gold", name: "Dark Gold", color1: "#facc15", color2: "#ca8a04" },
+      { id: "carbon", name: "Carbon", color1: "#d1d5db", color2: "#4b5563" },
+      { id: "glassmorphism", name: "Glassmorphism", color1: "#38bdf8", color2: "rgba(255,255,255,0.8)" },
+      { id: "minimal-dark", name: "Minimal Dark", color1: "#e4e4e7", color2: "#71717a" },
+      { id: "minimal-light", name: "Minimal Light", color1: "#2563eb", color2: "#1d4ed8" },
+      { id: "stadium", name: "Stadium", color1: "#4ade80", color2: "#15803d" },
+      { id: "football-pitch", name: "Football Pitch", color1: "#22c55e", color2: "#166534" },
+      { id: "cricket-turf", name: "Cricket Turf", color1: "#eab308", color2: "#854d0e" },
+      { id: "deep-space", name: "Deep Space", color1: "#818cf8", color2: "#4338ca" },
+      { id: "matrix-green", name: "Matrix Green", color1: "#00ff66", color2: "#008033" },
+      { id: "neon-purple", name: "Neon Purple", color1: "#e879f9", color2: "#a21caf" },
+      { id: "red-and-black", name: "Red & Black", color1: "#ef4444", color2: "#7f1d1d" },
+      { id: "blue-and-white", name: "Blue & White", color1: "#ffffff", color2: "#3b82f6" },
+      { id: "premium-gold", name: "Premium Gold", color1: "#f7e7a9", color2: "#d4af37" }
+    ];
+
+    const themePickerGrid = document.getElementById("theme-preview-grid");
+    const themeModalOverlay = document.getElementById("theme-modal-overlay");
+    const customAccentPicker = document.getElementById("custom-accent-picker");
+
+    function renderThemePreviews(active) {
+      if (!themePickerGrid) return;
+      themePickerGrid.innerHTML = ALL_THEMES.map(t => `
+        <div class="theme-card-option${t.id === active ? ' active' : ''}" data-tid="${t.id}">
+          <div class="theme-swatch" style="background:linear-gradient(135deg, ${t.color1}, ${t.color2});"></div>
+          <div class="theme-name-txt">${t.name}</div>
+        </div>
+      `).join("");
+
+      themePickerGrid.querySelectorAll(".theme-card-option").forEach(card => {
+        card.addEventListener("click", () => {
+          setTheme(card.dataset.tid);
+        });
+      });
+    }
+
+    function setTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem("omair_theme", theme);
+      document.querySelectorAll(".theme-dot").forEach(d => {
+        d.classList.toggle("active", d.dataset.setTheme === theme);
+      });
+      document.querySelectorAll(".theme-card-option").forEach(c => {
+        c.classList.toggle("active", c.dataset.tid === theme);
+      });
+    }
+
+    const savedTheme = localStorage.getItem("omair_theme") || "cyber-neon";
+    setTheme(savedTheme);
+    renderThemePreviews(savedTheme);
+
+    const savedCustomAccent = localStorage.getItem("omair_custom_accent");
+    if (savedCustomAccent) {
+      document.documentElement.style.setProperty("--accent", savedCustomAccent);
+      document.documentElement.style.setProperty("--accent-glow", savedCustomAccent + "66");
+      if (customAccentPicker) customAccentPicker.value = savedCustomAccent;
+    }
+
+    customAccentPicker?.addEventListener("input", (e) => {
+      const col = e.target.value;
+      document.documentElement.style.setProperty("--accent", col);
+      document.documentElement.style.setProperty("--accent-glow", col + "66");
+      localStorage.setItem("omair_custom_accent", col);
+    });
+
+    document.getElementById("btn-reset-theme")?.addEventListener("click", () => {
+      localStorage.removeItem("omair_custom_accent");
+      document.documentElement.style.removeProperty("--accent");
+      document.documentElement.style.removeProperty("--accent-glow");
+      setTheme("cyber-neon");
+    });
+
+    document.getElementById("btn-open-theme-modal")?.addEventListener("click", () => {
+      themeModalOverlay.classList.add("active");
+    });
+    document.getElementById("btn-close-theme-modal")?.addEventListener("click", () => {
+      themeModalOverlay.classList.remove("active");
+    });
+
+    document.querySelectorAll(".theme-dot").forEach(dot => {
+      dot.addEventListener("click", (e) => {
+        e.stopPropagation();
+        setTheme(dot.dataset.setTheme);
+      });
+    });
+
+    /* ═══════════════════════════════════════════════════════════
+       FEATURE 3: PERSONAL VIEWING STATISTICS (LOCALSTORAGE)
+       ═══════════════════════════════════════════════════════════ */
+    const STATS_KEY = "omair_personal_stats_v1";
+
+    function getStats() {
+      try {
+        const raw = localStorage.getItem(STATS_KEY);
+        return raw ? JSON.parse(raw) : {
+          totalStreams: 0,
+          totalSeconds: 0,
+          footballCount: 0,
+          cricketCount: 0,
+          sessions: 1,
+          teams: {},
+          competitions: {},
+          lastSession: Date.now()
+        };
+      } catch (e) {
+        return { totalStreams: 0, totalSeconds: 0, footballCount: 0, cricketCount: 0, sessions: 1, teams: {}, competitions: {} };
+      }
+    }
+
+    function saveStats(data) {
+      try { localStorage.setItem(STATS_KEY, JSON.stringify(data)); } catch (e) {}
+    }
+
+    let stats = getStats();
+    // Increment session counter if opened after 30+ minutes
+    if (Date.now() - (stats.lastSession || 0) > 30 * 60 * 1000) {
+      stats.sessions = (stats.sessions || 0) + 1;
+    }
+    stats.lastSession = Date.now();
+    saveStats(stats);
+
+    // Track active watching without false positives (requires at least 15s viewing)
+    let watchTicker = null;
+    let streamActiveSeconds = 0;
+    let streamLogged = false;
+    let activeTrackedMatch = null;
+
+    function startTrackingStream(ch) {
+      activeTrackedMatch = ch;
+      streamActiveSeconds = 0;
+      streamLogged = false;
+
+      if (watchTicker) clearInterval(watchTicker);
+      watchTicker = setInterval(() => {
+        if (!videoEl.paused && !videoEl.ended) {
+          streamActiveSeconds++;
+          stats.totalSeconds = (stats.totalSeconds || 0) + 1;
+
+          // Legitimate watch threshold reached (15 seconds)
+          if (streamActiveSeconds >= 15 && !streamLogged) {
+            streamLogged = true;
+            stats.totalStreams = (stats.totalStreams || 0) + 1;
+
+            const grp = (ch.group || "").toLowerCase();
+            if (grp.includes("football") || grp.includes("soccer") || grp.includes("ucl")) {
+              stats.footballCount = (stats.footballCount || 0) + 1;
+            } else if (grp.includes("cricket")) {
+              stats.cricketCount = (stats.cricketCount || 0) + 1;
+            }
+
+            if (ch.group) {
+              stats.competitions[ch.group] = (stats.competitions[ch.group] || 0) + 1;
+            }
+
+            const parsed = parseMatchTitle(ch.title);
+            if (parsed.hasVs) {
+              stats.teams[parsed.team1] = (stats.teams[parsed.team1] || 0) + 1;
+              stats.teams[parsed.team2] = (stats.teams[parsed.team2] || 0) + 1;
+            }
+          }
+
+          if (streamActiveSeconds % 10 === 0) {
+            saveStats(stats);
+          }
+        }
+      }, 1000);
+    }
+
+    function stopTrackingStream() {
+      if (watchTicker) {
+        clearInterval(watchTicker);
+        watchTicker = null;
+      }
+      saveStats(stats);
+    }
+
+    function renderStatsModal() {
+      const s = getStats();
+      const mins = Math.floor((s.totalSeconds || 0) / 60);
+      const hrs = (mins / 60).toFixed(1);
+
+      document.getElementById("stats-total-streams").textContent = s.totalStreams || 0;
+      document.getElementById("stats-total-time").textContent = mins >= 60 ? `${hrs}h` : `${mins}m`;
+      document.getElementById("stats-count-football").textContent = s.footballCount || 0;
+      document.getElementById("stats-count-cricket").textContent = s.cricketCount || 0;
+      document.getElementById("stats-count-sessions").textContent = s.sessions || 1;
+
+      // Top Teams
+      const topTeams = Object.entries(s.teams || {}).sort((a,b) => b[1] - a[1]).slice(0, 5);
+      const teamsList = document.getElementById("stats-top-teams-list");
+      if (topTeams.length) {
+        teamsList.innerHTML = topTeams.map(([t, c]) => `
+          <div class="stats-item"><span>${esc(t)}</span><strong>${c}x</strong></div>
+        `).join("");
+      } else {
+        teamsList.innerHTML = `<div class="stats-item"><span>No teams logged yet</span></div>`;
+      }
+
+      // Top Competitions
+      const topComps = Object.entries(s.competitions || {}).sort((a,b) => b[1] - a[1]).slice(0, 5);
+      const compsList = document.getElementById("stats-top-comps-list");
+      if (topComps.length) {
+        compsList.innerHTML = topComps.map(([c, count]) => `
+          <div class="stats-item"><span>${esc(c)}</span><strong>${count}x</strong></div>
+        `).join("");
+      } else {
+        compsList.innerHTML = `<div class="stats-item"><span>No leagues logged yet</span></div>`;
+      }
+    }
+
+    const statsModal = document.getElementById("stats-modal-overlay");
+    document.getElementById("btn-open-stats")?.addEventListener("click", () => {
+      renderStatsModal();
+      statsModal.classList.add("active");
+    });
+    document.getElementById("btn-close-stats")?.addEventListener("click", () => {
+      statsModal.classList.remove("active");
+    });
+    document.getElementById("btn-reset-stats")?.addEventListener("click", () => {
+      if (confirm("Reset your personal watch stats to zero?")) {
+        localStorage.removeItem(STATS_KEY);
+        stats = getStats();
+        renderStatsModal();
+      }
+    });
+
+    /* ═══════════════════════════════════════════════════════════
+       OFFLINE DETECTION & SEARCH SHORTCUT
+       ═══════════════════════════════════════════════════════════ */
     const offlineToast = document.getElementById("offline-toast");
     function updateOnlineStatus() {
       if (!navigator.onLine) {
@@ -288,25 +671,6 @@
     window.addEventListener("online", updateOnlineStatus);
     window.addEventListener("offline", updateOnlineStatus);
 
-    /* 7-Theme Switcher */
-    const themeDots = document.querySelectorAll(".theme-dot");
-    const savedTheme = localStorage.getItem("omair_theme") || "cyber-neon";
-    function setTheme(theme) {
-      document.documentElement.setAttribute("data-theme", theme);
-      localStorage.setItem("omair_theme", theme);
-      themeDots.forEach(d => {
-        d.classList.toggle("active", d.dataset.setTheme === theme);
-      });
-    }
-    setTheme(savedTheme);
-    themeDots.forEach(dot => {
-      dot.addEventListener("click", (e) => {
-        e.stopPropagation();
-        setTheme(dot.dataset.setTheme);
-      });
-    });
-
-    /* Focus Search on "/" Key */
     window.addEventListener("keydown", (e) => {
       if (e.key === "/" && document.activeElement.tagName !== "INPUT") {
         e.preventDefault();
@@ -314,7 +678,7 @@
       }
     });
 
-    /* DOM References */
+    /* DOM references */
     const homeInner         = document.getElementById("home-view");
     const playerView        = document.getElementById("player-view");
     const channelList       = document.getElementById("channel-list");
@@ -358,6 +722,122 @@
     let currentCh1     = null;
     let currentCh2     = null;
 
+    /* ═══════════════════════════════════════════════════════════
+       FEATURE 1 & 2: QUALITY SELECTOR & INDEPENDENT AUDIO ENGINE
+       ═══════════════════════════════════════════════════════════ */
+    const qualitySelect1 = document.getElementById("quality-select-1");
+    const qualitySelect2 = document.getElementById("quality-select-2");
+    const btnMute1       = document.getElementById("btn-mute-1");
+    const btnMute2       = document.getElementById("btn-mute-2");
+    const volSlider1     = document.getElementById("vol-slider-1");
+    const volSlider2     = document.getElementById("vol-slider-2");
+    const hudPanel2      = document.getElementById("hud-panel-2");
+
+    let userPreferredQuality = localStorage.getItem("omair_preferred_quality") || "auto";
+
+    // Setup Independent Audio Listeners
+    function setupAudioControls() {
+      // Screen 1 Audio
+      btnMute1?.addEventListener("click", () => {
+        videoEl.muted = !videoEl.muted;
+        updateAudioHUD(1);
+      });
+      volSlider1?.addEventListener("input", (e) => {
+        videoEl.volume = parseFloat(e.target.value);
+        if (videoEl.volume > 0) videoEl.muted = false;
+        updateAudioHUD(1);
+      });
+
+      // Screen 2 Audio
+      btnMute2?.addEventListener("click", () => {
+        video2El.muted = !video2El.muted;
+        updateAudioHUD(2);
+      });
+      volSlider2?.addEventListener("input", (e) => {
+        video2El.volume = parseFloat(e.target.value);
+        if (video2El.volume > 0) video2El.muted = false;
+        updateAudioHUD(2);
+      });
+    }
+    setupAudioControls();
+
+    function updateAudioHUD(screenNum) {
+      if (screenNum === 1) {
+        const isMuted = videoEl.muted || videoEl.volume === 0;
+        btnMute1.textContent = isMuted ? "🔇 Muted" : "🔊 Audio On";
+        btnMute1.classList.toggle("active-audio", !isMuted);
+        volSlider1.value = isMuted ? 0 : videoEl.volume;
+      } else {
+        const isMuted = video2El.muted || video2El.volume === 0;
+        btnMute2.textContent = isMuted ? "🔇 Muted" : "🔊 Audio On";
+        btnMute2.classList.toggle("active-audio", !isMuted);
+        volSlider2.value = isMuted ? 0 : video2El.volume;
+      }
+    }
+
+    // Populate actual available stream qualities from Shaka Player
+    function updateQualityDropdown(player, dropdown) {
+      if (!player || !dropdown) return;
+      try {
+        const tracks = player.getVariantTracks();
+        dropdown.innerHTML = "";
+
+        if (!tracks || !tracks.length) {
+          dropdown.innerHTML = `<option value="auto">Auto (Default)</option>`;
+          return;
+        }
+
+        // Distinct heights available in stream
+        const heights = [...new Set(tracks.map(t => t.height).filter(Boolean))].sort((a,b) => b - a);
+
+        if (!heights.length) {
+          dropdown.innerHTML = `<option value="auto">Auto (Standard)</option>`;
+          return;
+        }
+
+        dropdown.innerHTML = `<option value="auto">Auto Adaptive</option>`;
+        heights.forEach(h => {
+          dropdown.innerHTML += `<option value="${h}">${h}p</option>`;
+        });
+
+        // Apply saved preference if supported by stream
+        if (userPreferredQuality !== "auto" && heights.includes(parseInt(userPreferredQuality, 10))) {
+          dropdown.value = userPreferredQuality;
+          applyTrackQuality(player, userPreferredQuality);
+        } else {
+          dropdown.value = "auto";
+        }
+      } catch (err) {
+        dropdown.innerHTML = `<option value="auto">Auto</option>`;
+      }
+    }
+
+    function applyTrackQuality(player, heightVal) {
+      if (!player) return;
+      try {
+        if (heightVal === "auto") {
+          player.configure({ abr: { enabled: true } });
+        } else {
+          player.configure({ abr: { enabled: false } });
+          const targetHeight = parseInt(heightVal, 10);
+          const tracks = player.getVariantTracks().filter(t => t.height === targetHeight);
+          if (tracks.length > 0) {
+            player.selectVariantTrack(tracks[0], /* clearBuffer */ true);
+          }
+        }
+      } catch (e) {}
+    }
+
+    qualitySelect1?.addEventListener("change", (e) => {
+      userPreferredQuality = e.target.value;
+      localStorage.setItem("omair_preferred_quality", userPreferredQuality);
+      applyTrackQuality(localShaka1, userPreferredQuality);
+    });
+
+    qualitySelect2?.addEventListener("change", (e) => {
+      applyTrackQuality(localShaka2, e.target.value);
+    });
+
     /* Initialize Shaka Player instances */
     async function initPlayers() {
       shaka.polyfill.installAll();
@@ -374,26 +854,36 @@
         };
         localShaka1.configure(config);
         localShaka2.configure(config);
+
+        localShaka1.addEventListener("adaptation", () => {
+          if (qualitySelect1 && qualitySelect1.value === "auto") {
+            // Track auto adaptive shifts
+          }
+        });
       }
     }
     initPlayers();
 
-    async function loadStreamInto(playerInstance, videoTag, url) {
+    async function loadStreamInto(playerInstance, videoTag, url, screenNum) {
       if (!url) return;
       try {
         if (playerInstance) {
           await playerInstance.load(url);
           videoTag.play().catch(() => {});
+          const dropdown = screenNum === 1 ? qualitySelect1 : qualitySelect2;
+          setTimeout(() => updateQualityDropdown(playerInstance, dropdown), 1200);
         } else {
           videoTag.src = url;
           videoTag.load();
           videoTag.play().catch(() => {});
         }
+        updateAudioHUD(screenNum);
       } catch (err) {
         console.warn("Direct Shaka load error, falling back to native:", err);
         videoTag.src = url;
         videoTag.load();
         videoTag.play().catch(() => {});
+        updateAudioHUD(screenNum);
       }
     }
 
@@ -427,6 +917,7 @@
       isSplitActive = true;
       playerGrid.classList.add("dual-view");
       slot2.style.display = "block";
+      hudPanel2.style.display = "flex";
       splitBtn.classList.add("active");
       splitHint.classList.add("visible");
       targetBar.classList.add("visible");
@@ -444,6 +935,7 @@
       isSplitActive = false;
       playerGrid.classList.remove("dual-view");
       slot2.style.display = "none";
+      hudPanel2.style.display = "none";
       splitBtn.classList.remove("active");
       splitHint.classList.remove("visible");
       targetBar.classList.remove("visible");
@@ -486,13 +978,14 @@
           nowLogo.classList.add("hidden");
         }
       }
-      loadStreamInto(localShaka1, videoEl, ch.url);
+      loadStreamInto(localShaka1, videoEl, ch.url, 1);
+      startTrackingStream(ch);
     }
 
     function playInScreen2(ch) {
       currentCh2 = ch;
       badge2.textContent = ch.title.split(" vs ")[0] || "Screen 2";
-      loadStreamInto(localShaka2, video2El, ch.url);
+      loadStreamInto(localShaka2, video2El, ch.url, 2);
     }
 
     /* Picture-in-Picture Toggle */
@@ -533,6 +1026,7 @@
 
     function stopAllVideo() {
       disableSplitMode();
+      stopTrackingStream();
       if (localShaka1) {
         try { localShaka1.unload(); } catch(e) {}
       }
